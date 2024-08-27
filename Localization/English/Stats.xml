@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contentList>
+
+    <!-- Toggle for entity to take off their visual -->
+
+    <content contentuid="hae711075g6cf1g4d97g8b66g5ec8c904c273" version="1">Take off [INSERT VISUAL NAME HERE]</content> 
+    <content contentuid="hd23ae732gdf5cg4d34gb8f1g3d34daad9a8e" version="1">When this is active, the entity will have removed its [INSERT VISUAL NAME HERE]</content>
+
+    <!-- Passive Applied to entity when their visual is taken off -->
+
+    <content contentuid="hb6d9727cg08e8g4e3dgb07bgc5a05a60a90c" version="1">No [INSERT VISUAL NAME HERE]</content>
+    <content contentuid="h315a3971gd3c1g4587gbf91gbb5d4e4890f3" version="1">Entity is not wearing a [INSERT VISUAL NAME HERE]</content>
+    <content contentuid="h8b97d687a91c4238abcbbc5e1a8352981a91" version="1">copy glasses to NPC</content>
+    <content contentuid="h8d373cc6f5224321b21d19e7d332fd3b77e7" version="1">SethGlassesTest</content>
+    <content contentuid="hbda8756fd3f64edaac9122a694c3585b05c5" version="1">Take off dangly</content>
+    <content contentuid="h74f1432734174ae78a0cc9fea833280c4488" version="1">Put on dangly</content>
+    <content contentuid="hd2e53c233bc34c77a4a015af543b94bf0c8f" version="1">Take off frame</content>
+    <content contentuid="he39b84c3fe6f4b729ac197e36b0258e1eb1g" version="1">Put on frame</content>
+    <content contentuid="h78968a37737f470a9ead0e8431d4439c69dg" version="1">None</content>
+</contentList>
+

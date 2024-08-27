@@ -1,0 +1,9 @@
+new entry "INSERT_YOUR_TAKE_OFF_PASSIVE_NAME_HERE"
+type "PassiveData"
+data "DisplayName" "hae711075g6cf1g4d97g8b66g5ec8c904c273"
+data "Description" "hd23ae732gdf5cg4d34gb8f1g3d34daad9a8e"
+data "Icon" "PUT_YOUR_ICON_NAME_HERE"
+data "Properties" "IsToggled;ToggledDefaultAddToHotbar"
+data "ToggleOnFunctors" "ApplyStatus(INSERT_YOUR_TAKE_OFF_STATUS_NAME_HERE,100,-1)"
+data "ToggleOffFunctors" "RemoveStatus(INSERT_YOUR_TAKE_OFF_STATUS_NAME_HERE)"
+
