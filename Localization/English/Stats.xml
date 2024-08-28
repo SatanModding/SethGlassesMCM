@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <contentList>
 
-    <!-- Toggle for entity to take off their visual -->
-
-    <content contentuid="hae711075g6cf1g4d97g8b66g5ec8c904c273" version="1">Take off [INSERT VISUAL NAME HERE]</content> 
-    <content contentuid="hd23ae732gdf5cg4d34gb8f1g3d34daad9a8e" version="1">When this is active, the entity will have removed its [INSERT VISUAL NAME HERE]</content>
 
     <!-- Passive Applied to entity when their visual is taken off -->
 
-    <content contentuid="hb6d9727cg08e8g4e3dgb07bgc5a05a60a90c" version="1">No [INSERT VISUAL NAME HERE]</content>
-    <content contentuid="h315a3971gd3c1g4587gbf91gbb5d4e4890f3" version="1">Entity is not wearing a [INSERT VISUAL NAME HERE]</content>
-    <content contentuid="h8b97d687a91c4238abcbbc5e1a8352981a91" version="1">copy glasses to NPC</content>
-    <content contentuid="h8d373cc6f5224321b21d19e7d332fd3b77e7" version="1">SethGlassesTest</content>
-    <content contentuid="hbda8756fd3f64edaac9122a694c3585b05c5" version="1">Take off dangly</content>
-    <content contentuid="h74f1432734174ae78a0cc9fea833280c4488" version="1">Put on dangly</content>
-    <content contentuid="hd2e53c233bc34c77a4a015af543b94bf0c8f" version="1">Take off frame</content>
-    <content contentuid="he39b84c3fe6f4b729ac197e36b0258e1eb1g" version="1">Put on frame</content>
+    <content contentuid="h8d373cc6f5224321b21d19e7d332fd3b77e7" version="1">Glasses Low</content>
+
+    <content contentuid="h023253023d0a4077b1c49004aa279ca8c0e4" version="1">Lokelani Seth Glasses Shared</content>
+
+
     <content contentuid="h78968a37737f470a9ead0e8431d4439c69dg" version="1">None</content>
+
+    <content contentuid="h74319446fe094b24ab3c39897cda41531d17" version="1">You should not be seeing this</content>
+
+    <content contentuid="h061bfb46cb2448a7940ed7872b6cc74c868c" version="1">Take off your glasses</content>
+    <content contentuid="h8f3c990e6168420fbfe540829a3decb98c5f" version="1">Add instructions here</content>
+
+    <content contentuid="h2a716a169e8e4ead9fac67080a501e00f3gf" version="1">Put glasses on character</content>
+    <content contentuid="hf09c559d41f24fa1a9614c667f3d27f5e047" version="1">Yes. NPCs work as well</content>
+
+    <content contentuid="he5dba33e3a3547b88e931d9300014fbab8f3" version="1">Frame</content>
+
+   
+
+    <content contentuid="h7ed12bdec57b4bb195098dde096e9fe7efb4" version="1">Arms</content>
+    <content contentuid="hdb87bfa63dff4855af0c9f93fc400da411dc" version="1">Lenses</content>
+    <content contentuid="hc51a4fc9627b48e586ce2a2263a4340c93d7" version="1">Chain Main</content>
+    <content contentuid="ha00dd8ec8ab443959db60e0a02157f050d0e" version="1">Charm Left</content>
+    <content contentuid="hc734521b4c454622988831e663da5c76c860" version="1">Charm Right</content>
+    <content contentuid="h2a0e70b12e674af0bf29289c90011cb544d1" version="1">Charm Right 1</content>
+    <content contentuid="hefe21e8573b949698483159e117a3e65g632" version="1">Charm Right 2</content>
+    <content contentuid="he99802c14faf42a1a597ede17676c2d12d0f" version="1">Load Preset (coming soon)</content>
+    <content contentuid="h8f747922d1a44db1b803060c45c084343af6" version="1">Glasses High</content>
+    <content contentuid="h67ad59a7f4bd4f028302d6c972fcf4fd5654" version="1">Swap high to low or vice versa (coming soon)</content>
 </contentList>
 

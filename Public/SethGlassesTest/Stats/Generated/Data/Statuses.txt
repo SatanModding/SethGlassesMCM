@@ -1,14 +1,19 @@
 
-// Replace name in entire project with a unique one for your mod //
-new entry "INSERT_YOUR_TAKE_OFF_STATUS_NAME_HERE"  
+// This will be moved to IMGUI instead
+
+new entry "LOKE_GLASSES_TAKE_OFF_GLASSES_BOOST"  
 type "StatusData"
 data "StatusType" "BOOST"
-data "DisplayName" "hb6d9727cg08e8g4e3dgb07bgc5a05a60a90c"
-data "Description" "h315a3971gd3c1g4587gbf91gbb5d4e4890f3"
-// Replace icon with your custom one //
+data "DisplayName" "h74319446fe094b24ab3c39897cda41531d17"
 data "Icon" "PUT_YOUR_ICON_NAME_HERE"
-data "StackId" "INSERT_YOUR_TAKE_OFF_STATUS_NAME_HERE"
+data "StackId" "LOKE_GLASSES_TAKE_OFF_GLASSES_BOOST"
 
 
 
+new entry "LOKE_GLASSES_GIVE_GLASSES_BOOST"  
+type "StatusData"
+data "StatusType" "BOOST"
+data "DisplayName" "h74319446fe094b24ab3c39897cda41531d17"
+data "Icon" "PUT_YOUR_ICON_NAME_HERE"
+data "StackId" "LOKE_GLASSES_GIVE_GLASSES_BOOST"
 

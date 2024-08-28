@@ -647,7 +647,7 @@ end
 ---@param visual    string  - UUID
 ---@param type      string  - name (ex: Private Parts)
 function Entity:DeleteCurrentVisualOfType(character, visual, type)
-    local visualType = Visual:getType(visual) -- visualType = CCAV or CCSV
+    local visualType = Visuals:getType(visual) -- visualType = CCAV or CCSV
     print("Debug: visualType = " .. tostring(visualType))
     local entity = Ext.Entity.Get(character)
 

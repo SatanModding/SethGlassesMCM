@@ -31,56 +31,56 @@
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_STAINED_GLASS"/> 
                     <attribute id="U1" type="float" value="0.03125"/> 
                     <attribute id="U2" type="float" value="0.0625"/> 
                     <attribute id="V1" type="float" value="0.0"/> 
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_PIXIE_KILLER"/> 
                     <attribute id="U1" type="float" value="0.0625"/> 
                     <attribute id="U2" type="float" value="0.09375"/> 
                     <attribute id="V1" type="float" value="0.0"/> 
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_MR_HEALING"/> 
                     <attribute id="U1" type="float" value="0.09375"/> 
                     <attribute id="U2" type="float" value="0.125"/> 
                     <attribute id="V1" type="float" value="0.0"/> 
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_INFERNAL"/> 
                     <attribute id="U1" type="float" value="0.125"/> 
                     <attribute id="U2" type="float" value="0.15625"/> 
                     <attribute id="V1" type="float" value="0.0"/> 
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/>
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_FLOWER_BOY"/>
                     <attribute id="U1" type="float" value="0.15625"/>
                     <attribute id="U2" type="float" value="0.1875"/>
                     <attribute id="V1" type="float" value="0.0"/>
                     <attribute id="V2" type="float" value="0.03125"/>
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_DARK_URGE"/> 
                     <attribute id="U1" type="float" value="0.1875"/> 
                     <attribute id="U2" type="float" value="0.21875"/> 
                     <attribute id="V1" type="float" value="0.0"/> 
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_CINNAMONROLL"/> 
                     <attribute id="U1" type="float" value="0.21875"/> 
                     <attribute id="U2" type="float" value="0.25"/> 
                     <attribute id="V1" type="float" value="0.0"/> 
                     <attribute id="V2" type="float" value="0.03125"/> 
                 </node>
                 <node id="IconUV">
-                    <attribute id="MapKey" type="FixedString" value=""/> 
+                    <attribute id="MapKey" type="FixedString" value="ICON_LOKE_CANT_SEE"/> 
                     <attribute id="U1" type="float" value="0.25"/> 
                     <attribute id="U2" type="float" value="0.28125"/> 
                     <attribute id="V1" type="float" value="0.0"/> 

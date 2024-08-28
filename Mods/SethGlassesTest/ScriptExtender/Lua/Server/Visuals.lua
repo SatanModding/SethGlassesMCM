@@ -5,33 +5,50 @@ Visuals.__index = Visuals
 
 local none = "1f82fcd6-b6d2-4b4b-a7f6-64c6b4ae132c"
 
-
--- TODO - fiddle with this
-local TYPES = {
-    "SETH_FRAME",
-    "SETH_ARMS",
-    "SETH_LENSES",
-    "SET_CHAINS_MAIN",
-    "SET_CHAINS_LEFT_1",
-    "SET_CHAINS_RIGHT_1",
-    "SET_CHAINS_RIGHT_2",
-    "SET_CHARM_LEFT_1",
-    "SET_CHARM_RIGHT_1",
-    "SET_CHARM_RIGHT_2"
+TYPES = {
+    "FRAME",
+    "ARMS",
+    "LENSES",
+    "CHAINS_MAIN",
+    "CHAINS_LEFT_1",
+    "CHAINS_RIGHT_1",
+    "CHAINS_RIGHT_2",
+    "CHARM_LEFT_1",
+    "CHARM_RIGHT_1",
+    "CHARM_RIGHT_2"
 }
 
 
 
-local SIZES = {
+SIZES = {
     "HIGH",
     "LOW",
-    "DGB"
 }
+
+
+-- adds a whole list of visuals with Osi.AddCustomVisualOverride for convenience
+---@param character string -uuid
+---@param listToAdd table 
+function Visuals:AddListOfVisuals(character, listToAdd)
+    for _, entry in pairs(listToAdd) do
+        Osi.AddCustomVisualOverride(character, entry)
+    end
+end
+
+
+-- removes a whole list of visuals with Osi.RemoveCustomVisualOvirride for convenience
+---@param character string -uuid
+---@param listToRemove table 
+function Visuals:RemoveListOfVisuals(character, listToRemove)
+    for _, entry in pairs(listToRemove) do
+        Osi.RemoveCustomVisualOvirride(character, entry)
+    end
+end
 
 
 -- returns the table of allowed glasses
 -- only Dragonborns are special
----@þaram chataczer string -uuid
+---@param character string -uuid
 ---@return allowedGlasses table -- 
 function Visuals:GetAllowedGlasses(character)
 
@@ -70,16 +87,20 @@ function Visuals:GetAllowedVisualsOfType(character, type, size)
     --DGB or other
     local allowedGlasses =  Visuals:GetAllowedGlasses(character)
 
-    for name, entry in pairs(allowedGlasses) do
-        if name == type then
-            if size == "LOW" then
-                table.insert(allowedVisuals, entry.uuidLow)
-            else 
-                table.insert(allowedVisuals, entry.uuidHigh) --this includes dgb
+    for _, content in pairs(allowedGlasses) do
+        for name, entry in pairs(content) do
+            if name == type then
+                for _, package in pairs(entry) do
+                    if size == "LOW" then
+                        table.insert(allowedVisuals, package.uuidLow)
+                    else 
+                        table.insert(allowedVisuals, package.uuidHigh) --this includes dgb
+                    end
+                end
+            end
         end
     end
-
-    return allowedVisuals()
+    return allowedVisuals
 end
 
 
@@ -93,15 +114,21 @@ function Visuals:GetAllGlassesVisuals(character)
     local allVisuals = Visuals:GetAllVisuals(character)
 
     for _, visual in pairs(allVisuals) do
-        for name, entry in pairs(listToSearch) do
-            if (entry.uuidLow == visual) or (entry.uuidHigh == visual) then
-                table.insert(glasses, visual)
+        for _, content in pairs(listToSearch) do
+            for name, entry in pairs(content) do
+                for _, package in pairs(entry) do
+                    if (package.uuidLow == visual) or (package.uuidHigh == visual) then
+                        table.insert(glasses, visual)
+                    end
+                end
             end
         end
     end
-
     return glasses
 end
+
+
+
 
 -- Get the High version of a Low visual or vice versa
 ---@param visual string - uuid of visual
@@ -109,20 +136,18 @@ end
 ---@return oppositeVisual uuid
 function Visuals:GetOtherVersion(visual, size)
 
-    -- dgb don't have another version
-    if size == "DGB" then
-        return
-    end
+    print("Get opposite of ", visual)
 
-    for _, entries in pairs(LOKE_HUMAN_GLASSES) do
-        for name, content in pairs(entries) do
+    -- not for DGBs
+    for name, entry in pairs(LOKE_HUMAN_GLASSES) do
+        for _, package in pairs(entry) do
             if size == "LOW" then
-                if content.uuidHigh == visual then
-                    return content.uuidLow
+                if package.uuidHigh == visual then
+                    return package.uuidLow
                 end
             elseif size =="HIGH" then
-                if content.uuidLow == visual then
-                    return content.uuidHigh
+                if package.uuidLow == visual then
+                    return package.uuidHigh
                 end
             end
         end
@@ -152,7 +177,10 @@ end
 ---@param size string - enum - the one we want to swap to
 function Visuals:SwapGlasses(character, size)
 
-    if size == "DGB" then
+
+    print("SWAPPING SIZES")
+
+    if IsDragonborn(character) then
         return
     end
 
@@ -166,6 +194,11 @@ function Visuals:SwapGlasses(character, size)
         local opposite = Visuals:GetOtherVersion(glassesPart, size)
         table.insert(oppositeVisual, opposite)
     end
+
+   -- print("currently")
+    --_D(currentlyEquippedGlasses)
+    --print("opposites ")
+   -- _D(oppositeVisual)
 
     
     -- remove old glasses components
@@ -196,6 +229,7 @@ end
 
 
 
+
 ---@param character string - uuid
 ---@param type string
 ---@return bool
@@ -204,11 +238,14 @@ function Visuals:HasGlassesEntryOfType(character, type)
     local tableToSearch = Visuals:GetAllowedGlasses(character)
     local allVisuals = Visuals:GetAllVisuals(character)
 
-    for typeName, content in pairs (tableToSearch) do
-        if typeName == type then
-            for _, entry in pairs(content) do
-                if Table:Contains(allVisuals, (entry.uuidLow)) or Table:Contains(allVisuals, (entry.uuidHigh)) then
-                    return true
+
+   for _, content in pairs (tableToSearch) do
+        for name, entry in pairs(content) do
+            if name == type then
+                for _, package in pairs(entry) do
+                    if Table:Contains(allVisuals, package.uuidLow) or Table:Contains(allVisuals, package.uuidHigh) then
+                        return true
+                    end
                 end
             end
         end
@@ -217,22 +254,24 @@ end
 
 
 
+
 -- returns the uuid of a certain type if the characters wears it
 ---@param character string - uuid
 ---@param type string
 ---@return string uuid
 function Visuals:GetGlassesEntryOfType(character, type)
-
     local tableToSearch = Visuals:GetAllowedGlasses(character)
     local allVisuals = Visuals:GetAllVisuals(character)
 
-    for typeName, content in pairs (tableToSearch) do
-        if typeName == type then
-            for _, entry in pairs(content) do
-                if Table:Contains(allVisuals, entry.uuidLow) then
-                    return entry.uuidLow
-                elseif Table:Contains(allVisuals, entry.uuidHigh) then
-                    return entry.uuidHigh
+    for _, content in pairs (tableToSearch) do
+        for name, entry in pairs(content) do
+            if name == type then
+                for _, package in pairs(entry) do
+                    if Table:Contains(allVisuals, package.uuidLow) then
+                        return package.uuidLow
+                    elseif Table:Contains(allVisuals, package.uuidHigh) then
+                        return package.uuidHigh
+                    end
                 end
             end
         end
@@ -249,10 +288,17 @@ end
 function Visuals:SwapVisuals(character, type, newVisual)
 
     local currentVisual = Visuals:GetGlassesEntryOfType(character, type)
-    Osi.RemoveCustomVisualOvirride(character, currentVisual)
+
+   -- print("currentVisual ", currentVisual)
+
+    if currentVisual then
+        --print("Osi.AddCustomVisualOverride ",character," ", currentVisual)
+        Osi.RemoveCustomVisualOvirride(character, currentVisual)
+    end
 
     -- if the new visual is of type none, only remove, don't add 
-    if not newVisual == none then
+    if not (newVisual == none) then
+       -- print("Osi.AddCustomVisualOverride ",character," ", newVisual)
         Osi.AddCustomVisualOverride(character, newVisual)
     end
 end
@@ -274,60 +320,197 @@ function Visuals:GiveVisualComponentIfHasNone(character)
 end
 
 
+local glassesChoice = {} -- resets on console reset.
+
+
+-- cycles through visuals
 ---@param character string - uuid
 ---@param type string -- enum
 ---@return visual string -- uuid
 function Visuals:GetNextVisual(character, type, size)
 
-
-    local glasseslChoice = {} -- turn into uservars
-
     local permittedVisuals = Visuals:GetAllowedVisualsOfType(character, type, size)
 
+    -- if there already is an entry
+    if glassesChoice.character == character and glassesChoice.type == type and glassesChoice.size == size then
 
+        -- Increment the index, wrap around if necessary
+        glassesChoice.index = (glassesChoice.index % #permittedVisuals) + 1
+    
+    -- add entry
+    else
+        glassesChoice = {character = character, type = type, size = size, index = 1}
+    end
 
+    local selectedGlassesComponent = permittedVisuals[glassesChoice.index]
+    return selectedGlassesComponent
     
 end
 
     
 
 
--- TODO - Currently resets on Saveload. Make into uservariable
--- Allows to cycle through a list of genitals instead of choosing a random one
-local genitalChoice = {}
+--@param type -    "CHARM_LEFT_1" "CHARM_RIGHT_1" "CHARM_RIGHT_2"
+function Visuals:GetChainForCharm(type, size)
 
--- Choose random genital from selection (Ex: random vulva from vulva a - c)
----@param spell				- Name of the spell by which the genitals are filtered (vulva, penis, erection)
----@param uuid 	   			- uuid of entity that will receive the genital
----@return selectedGenital	- ID of CharacterCreationAppearaceVisual
-function Genital:GetNextGenital(spell, uuid)
-    local permittedGenitals = getPermittedGenitals(uuid)
-    local filteredGenitals = getFilteredGenitals(spell, permittedGenitals)
+    local MATCH = {
 
-	if  not filteredGenitals then
-        -- _P("[BG3SX] No " , spell , " genitals available after filtering for this entity.")
-        return nil
-    else
-		if genitalChoice.uuid == uuid and genitalChoice.spell == spell then
-			-- Increment the index, wrap around if necessary
-			genitalChoice.index = (genitalChoice.index % #filteredGenitals) + 1
-		else
-			genitalChoice = {uuid = uuid, spell = spell, index = 1}
-		end
+    ["CHARM_LEFT_1"] = "CHAINS_LEFT_1",
+    ["CHARM_RIGHT_1"] = "CHAINS_RIGHT_1",
+    ["CHARM_RIGHT_2"] = "CHAINS_RIGHT_2"
+    }
 
-        local selectedGenital = filteredGenitals[genitalChoice.index]
-        return selectedGenital
+    local tableToSearch
+    if size == "DGB" then 
+        tableToSearch = LOKE_DGB_GLASSES
+    else 
+        tableToSearch = LOKE_HUMAN_GLASSES
+    end
+
+    for name, entry in pairs(tableToSearch) do
+        if name == MATCH[type] then
+            if size == "LOW" then
+                return entry[1].uuidLow
+            else
+                return entry[1].uuidHigh
+            end
+        end
     end
 end
 
 
 
-function Visuals:GetHandle(visual)
+-- add left chain if there is  a left charm
+-- add right chain if there is a right charm
+-- add right chain 2 if there is a right charm
+-- remove left chain if there is  no left charm
+-- remove right chain if there is no right charm
+-- remove right chain 2 if there is no right charm
 
-    local content = Ext.StaticData.Get(visual,"CharacterCreationSharedVisual")
-    local handle = content.DisplayName.Handle.Handle
-    local name = Ext.Loca.GetTranslatedString(handle)
-    return name
-    
+-- main chain is optional. Can be chosen at will
+-- Do not allow chains to be chosen by themselces, they are always part of left charm, right charm or right charm 2
+function Visuals:MatchChain(character)
+
+   -- print("Matching Chain ")
+
+    local size = Visuals:GetCurrentGlassesSizeCharacter(character)
+    if IsDragonborn(character) then
+        size = "DGB"
+    end
+
+    print("size is ", size)
+
+    local chainLeft = Visuals:GetChainForCharm("CHARM_LEFT_1",size)
+    local chainright1 = Visuals:GetChainForCharm("CHARM_RIGHT_1",size)
+    local chainright2 = Visuals:GetChainForCharm("CHARM_RIGHT_2", size)
+
+    print("chain left ", chainLeft)
+    print("chain right ", chainright1)
+    print("chain right 2 ", chainright2)
+
+
+    if Visuals:HasGlassesEntryOfType(character,"CHARM_LEFT_1") then
+        print("HAS CHARMS LEFT")
+        Osi.AddCustomVisualOverride(character, chainLeft)
+    elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_LEFT_1")then
+        print("HAS NO CHARMS LEFT BUT A CHAIN")
+        Osi.RemoveCustomVisualOvirride(character, chainLeft)
+    end
+        
+
+    if Visuals:HasGlassesEntryOfType(character,"CHARM_RIGHT_1")  then
+        print("HAS CHARMS RIGHT")
+        Osi.AddCustomVisualOverride(character, chainright1)
+    elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_RIGHT_1")then
+        print("HAS NO CHARMS RIGHT BUT A CHAIN")
+        Osi.RemoveCustomVisualOvirride(character, chainright1)
+
+    end
+
+
+    if Visuals:HasGlassesEntryOfType(character,"CHARM_RIGHT_2") then
+        print("HAS CHARMS RIGHT 2")
+        Osi.AddCustomVisualOverride(character, chainright2)
+    elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_RIGHT_2")then
+        print("HAS NO CHARMS RIGHT 2 BUT A CHAIN")
+        Osi.RemoveCustomVisualOvirride(character, chainright2)
+
+    end
+
 end
 
+
+
+function Visuals:GetCurrentGlassesSizeCharacter(character)
+
+    local currenGlassesVisuals = Visuals:GetAllGlassesVisuals(character)
+    local sample = currenGlassesVisuals[1]
+    local tableToSearch = Visuals:GetAllowedGlasses(character)
+    
+
+    for _, content in pairs (tableToSearch) do
+        for name, entry in pairs(content) do
+            for _, package in pairs(entry) do
+                if sample == package.uuidLow then
+                    return "LOW"
+                end
+
+                if sample == package.uuidHigh then
+                    return "High"
+                end
+            end
+        end
+    end
+end
+
+
+
+function Visuals:GetCurrentGlassesSizeVisual(visual)
+
+    local allTables = {LOKE_HUMAN_GLASSES, LOKE_DGB_GLASSES}
+
+    for _,tableToSearch in pairs(allTables) do
+        for name, entry in pairs(tableToSearch) do
+            for _, package in pairs(entry) do
+                if visual == package.uuidLow then
+                    return "LOW"
+                end
+
+                if visual == package.uuidHigh then
+                    return "High"
+                end
+            end
+        end
+    end
+end
+
+
+
+function Visuals:DifferentSize(currentGlassVisuals, anotherVisual)
+
+    if not currentGlassVisuals then
+        return
+    end
+
+    --_D(currentGlassVisuals)
+
+    local sizeA = Visuals:GetCurrentGlassesSizeVisual(currentGlassVisuals[1])
+    local sizeB = Visuals:GetCurrentGlassesSizeVisual(anotherVisual)
+
+    --print("sizeA ", sizeA)
+    --print("sizeB ", sizeB)
+
+    if sizeA == sizeB then
+        return false
+    else
+        return true
+    end
+
+end
+
+
+
+-- TODO - some visuals seem to get stuck sometimes
+-- create a "Oh fuck" spell that purges glasses 
+
+-- TODO -glasses seem to bet sometimes yeeted when swapping low <-> high
