@@ -12,6 +12,7 @@ Ext.Require("Server/SpellAddition.lua")
 Ext.Require("Server/PassiveAddition.lua")
 Ext.Require("Server/SpellListener.lua")
 Ext.Require("Server/PassiveListener.lua")
+Ext.Require("Server/MCMCommunication.lua")
 Ext.Require("Server/Main.lua")
 
 
@@ -111,3 +112,7 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(_, _)
         
     end)
 end)
+
+
+
+

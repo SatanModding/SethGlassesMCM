@@ -1,5 +1,5 @@
 {
-    "RequiredVersion": 15,
-    "ModTable": "MySEMod",
+    "RequiredVersion": 19,
+    "ModTable": "SethGlassesMCM",
     "FeatureFlags": ["Lua"]
 }

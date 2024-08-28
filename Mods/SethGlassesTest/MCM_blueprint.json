@@ -1,0 +1,370 @@
+{
+    "SchemaVersion": 1,
+    "Tabs": [
+        {
+            "TabName": "Seth's Glasses",
+            "TabId": "general",
+            "Sections": [
+
+                {
+
+                    "SectionId": "toggle_glasses",
+                    "SectionName": "Toggle Glasses",
+                    "Settings": [
+                        {
+                            "Id": "toggle_glasses",
+                            "Name": "Toggle Glasses",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "On",
+                            "Description": "Toggle Glasses On or Off."
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "TabName": "Glasses Low",
+            "TabId": "glasses_low",
+            "Sections": [
+
+                {
+                    "SectionId": "glasses_low_subsection",
+                    "SectionName": "Glasses Low",
+                    "Settings": [
+                        {
+                            "Id": "presets_low",
+                            "Name": "Presets",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "Pixie Killer",
+                                    "Cinnamonroll",
+                                    "Stained Glass",
+                                    "Flower Boy",
+                                    "Dark Urge",
+                                    "Can't See",
+                                    "Mr. Healing",
+                                    "Infernal",
+                                    "Plain",
+                                    "Nothing"
+                                ]
+                            },
+                            "Default": "Nothing",
+                            "Description": "Presets designed by Lokelani"
+                        },
+
+                        {
+                            "Id": "frame_low",
+                            "Name": "Frame",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "Off",
+                            "Description": ""
+                        },
+
+                        {
+                           "Id": "arms_low",
+                            "Name": "Arms",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "Off",
+                            "Description": "Not available for DGB. Toggle off for large heads"
+                        },
+
+                        {
+                            "Id": "chains_low",
+                             "Name": "Chains",
+                             "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "Off",
+                            "Description": "Not available for DGB. Toggle off for large heads"
+                         },
+
+                        {
+                            "Id": "lenses_low",
+                             "Name": "Lenses",
+                             "Type": "radio",
+                             "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Plain",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         },
+
+                     
+                         {
+                            "Id": "charms_left_1_low",
+                             "Name": "Charms Left",
+                             "Type": "radio",
+                             "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         },
+
+                         {
+                            "Id": "charms_right_1_low",
+                             "Name": "Charms Right Upper",
+                             "Type": "radio",
+                             "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         },
+
+                         {
+                            "Id": "charms_right_2_low",
+                             "Name": "Charms Right Lower",
+                             "Type": "radio",
+                            "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "TabName": "Glasses High",
+            "TabId": "glasses_high",
+            "Sections": [
+                {
+                    "SectionId": "glasses_high_subsection",
+                    "SectionName": "Glasses High (Not available for Dragonborn)",
+                    "Settings": [
+                        {
+                            "Id": "presets_high",
+                            "Name": "Presets",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "Pixie Killer",
+                                    "Cinnamonroll",
+                                    "Stained Glass",
+                                    "Flower Boy",
+                                    "Dark Urge",
+                                    "Can't See",
+                                    "Mr. Healing",
+                                    "Infernal",
+                                    "Plain",
+                                    "Nothing"
+                                ]
+                            },
+                            "Default": "Nothing",
+                            "Description": "Presets designed by Lokelani"
+                        },
+
+                        {
+                            "Id": "frame_high",
+                            "Name": "Frame",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "Off",
+                            "Description": ""
+                        },
+
+                        {
+                           "Id": "arms_high",
+                            "Name": "Arms",
+                            "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "Off",
+                            "Description": ""
+                        },
+
+                        {
+                            "Id": "chains_high",
+                             "Name": "Chains",
+                             "Type": "radio",
+                            "Options": {
+                                "Choices": [
+                                    "On",
+                                    "Off"
+                                ]
+                            },
+                            "Default": "Off",
+                            "Description": ""
+                         },
+
+                        {
+                            "Id": "lenses_high",
+                             "Name": "Lenses",
+                             "Type": "radio",
+                             "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Plain",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         },
+
+                     
+                         {
+                            "Id": "charms_left_1_high",
+                             "Name": "Charms Left",
+                             "Type": "radio",
+                             "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         },
+
+                         {
+                            "Id": "charms_right_1_high",
+                             "Name": "Charms Right Upper",
+                             "Type": "radio",
+                             "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         },
+
+                         {
+                            "Id": "charms_right_2_high",
+                             "Name": "Charms Right Lower",
+                             "Type": "radio",
+                            "Options": {
+                                 "Choices": [
+                                     "Pixie Killer",
+                                     "Cinnamonroll",
+                                     "Stained Glass",
+                                     "Flower Boy",
+                                     "Dark Urge",
+                                     "Can't See",
+                                     "Mr. Healing",
+                                     "Infernal",
+                                     "Nothing"
+                                 ]
+                             },
+                             "Default": "Nothing",
+                             "Description": ""
+                         }
+                    ]
+                }
+            ]
+        },
+
+
+        {
+            "TabName": "Seth's Glasses 2 - Electric Boogalo",
+            "TabId": "main_2"
+
+        }
+           
+
+      
+
+
+        
+    ]
+}
