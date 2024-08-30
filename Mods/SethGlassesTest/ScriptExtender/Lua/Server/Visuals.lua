@@ -30,8 +30,12 @@ SIZES = {
 ---@param character string -uuid
 ---@param listToAdd table 
 function Visuals:AddListOfVisuals(character, listToAdd)
-    for _, entry in pairs(listToAdd) do
-        Osi.AddCustomVisualOverride(character, entry)
+
+
+    if listToAdd then
+        for _, entry in pairs(listToAdd) do
+            Osi.AddCustomVisualOverride(character, entry)
+        end
     end
 end
 
@@ -40,8 +44,11 @@ end
 ---@param character string -uuid
 ---@param listToRemove table 
 function Visuals:RemoveListOfVisuals(character, listToRemove)
-    for _, entry in pairs(listToRemove) do
-        Osi.RemoveCustomVisualOvirride(character, entry)
+
+    if listToRemove then
+        for _, entry in pairs(listToRemove) do
+            Osi.RemoveCustomVisualOvirride(character, entry)
+        end
     end
 end
 
@@ -75,6 +82,10 @@ function Visuals:GetAllVisuals(character)
 end
 
 
+
+
+
+
 -- returns all visuals that the chracter is allowed to have of a certain type (ex: all dgb lenses)
 ---@param character string - uuid
 ---@param type string -- enum
@@ -104,7 +115,7 @@ function Visuals:GetAllowedVisualsOfType(character, type, size)
 end
 
 
--- returns all visuals that are Lokes glasses
+-- returns all visuals that are Lokes glasses that are currently equipped on the character
 ---@param character string - uuid
 function Visuals:GetAllGlassesVisuals(character)
 
@@ -128,6 +139,35 @@ function Visuals:GetAllGlassesVisuals(character)
 end
 
 
+-- saves glasses in UserVars
+---@param character string - uuid
+function Visuals:SaveAndRemoveGlasses(character)
+
+    local currentGlasses = Visuals:GetAllGlassesVisuals(character)
+    UserVars:AssignGlasses(currentGlasses, character)
+    Visuals:RemoveListOfVisuals(character, currentGlasses)
+    
+end
+
+
+---@param character string - uuid
+function Visuals:RetrieveAndApplyGlasses(character)
+
+    -- if user has chosen any pther glasses visual, remove it before applying
+    -- the saved glasses
+
+    -- but only if there is a value in the UserVars.
+    -- Else they get removed if glasses have been applied via the MM
+    local userVars = UserVars:GetGlasses(character)
+    if userVars then
+        local currentGlasses = Visuals:GetAllGlassesVisuals(character)
+        Visuals:RemoveListOfVisuals(character, currentGlasses)
+    end
+   
+
+    local glassesToApply = UserVars:GetGlasses(character)
+    Visuals:AddListOfVisuals(character, glassesToApply)
+end
 
 
 -- Get the High version of a Low visual or vice versa
@@ -135,8 +175,6 @@ end
 ---@param size string - enum
 ---@return oppositeVisual uuid
 function Visuals:GetOtherVersion(visual, size)
-
-    print("Get opposite of ", visual)
 
     -- not for DGBs
     for name, entry in pairs(LOKE_HUMAN_GLASSES) do
@@ -177,8 +215,6 @@ end
 ---@param size string - enum - the one we want to swap to
 function Visuals:SwapGlasses(character, size)
 
-
-    print("SWAPPING SIZES")
 
     if IsDragonborn(character) then
         return
@@ -287,6 +323,7 @@ end
 ---@param newVisual string -- uuid
 function Visuals:SwapVisuals(character, type, newVisual)
 
+
     local currentVisual = Visuals:GetGlassesEntryOfType(character, type)
 
    -- print("currentVisual ", currentVisual)
@@ -297,9 +334,11 @@ function Visuals:SwapVisuals(character, type, newVisual)
     end
 
     -- if the new visual is of type none, only remove, don't add 
-    if not (newVisual == none) then
-       -- print("Osi.AddCustomVisualOverride ",character," ", newVisual)
-        Osi.AddCustomVisualOverride(character, newVisual)
+    if newVisual then 
+        if not (newVisual == none) then
+        -- print("Osi.AddCustomVisualOverride ",character," ", newVisual)
+            Osi.AddCustomVisualOverride(character, newVisual)
+        end
     end
 end
 
@@ -320,6 +359,8 @@ function Visuals:GiveVisualComponentIfHasNone(character)
 end
 
 
+
+-- TODO - this can be deleted after everything is on MCM
 local glassesChoice = {} -- resets on console reset.
 
 
@@ -398,41 +439,41 @@ function Visuals:MatchChain(character)
         size = "DGB"
     end
 
-    print("size is ", size)
+   -- print("size is ", size)
 
     local chainLeft = Visuals:GetChainForCharm("CHARM_LEFT_1",size)
     local chainright1 = Visuals:GetChainForCharm("CHARM_RIGHT_1",size)
     local chainright2 = Visuals:GetChainForCharm("CHARM_RIGHT_2", size)
 
-    print("chain left ", chainLeft)
-    print("chain right ", chainright1)
-    print("chain right 2 ", chainright2)
+   -- print("chain left ", chainLeft)
+   -- print("chain right ", chainright1)
+   -- print("chain right 2 ", chainright2)
 
 
     if Visuals:HasGlassesEntryOfType(character,"CHARM_LEFT_1") then
-        print("HAS CHARMS LEFT")
+      --  print("HAS CHARMS LEFT")
         Osi.AddCustomVisualOverride(character, chainLeft)
     elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_LEFT_1")then
-        print("HAS NO CHARMS LEFT BUT A CHAIN")
+      --  print("HAS NO CHARMS LEFT BUT A CHAIN")
         Osi.RemoveCustomVisualOvirride(character, chainLeft)
     end
         
 
     if Visuals:HasGlassesEntryOfType(character,"CHARM_RIGHT_1")  then
-        print("HAS CHARMS RIGHT")
+      --  print("HAS CHARMS RIGHT")
         Osi.AddCustomVisualOverride(character, chainright1)
     elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_RIGHT_1")then
-        print("HAS NO CHARMS RIGHT BUT A CHAIN")
+      --  print("HAS NO CHARMS RIGHT BUT A CHAIN")
         Osi.RemoveCustomVisualOvirride(character, chainright1)
 
     end
 
 
     if Visuals:HasGlassesEntryOfType(character,"CHARM_RIGHT_2") then
-        print("HAS CHARMS RIGHT 2")
+       -- print("HAS CHARMS RIGHT 2")
         Osi.AddCustomVisualOverride(character, chainright2)
     elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_RIGHT_2")then
-        print("HAS NO CHARMS RIGHT 2 BUT A CHAIN")
+      --  print("HAS NO CHARMS RIGHT 2 BUT A CHAIN")
         Osi.RemoveCustomVisualOvirride(character, chainright2)
 
     end
@@ -506,6 +547,147 @@ function Visuals:DifferentSize(currentGlassVisuals, anotherVisual)
         return true
     end
 
+end
+
+
+
+
+
+-- returns visual of certain style, type and size
+---@param style string - PIXIE_KILLER
+---@param type string - LENSES
+---@param size string - LOW, HIGH, DGB
+function Visuals:GetVisual(style, type, size)
+
+
+    -- print("Visuals")
+    -- print("style ", style)
+    -- print("type ", type)
+    -- print("size ", size)
+
+    local tableToSearch = LOKE_HUMAN_GLASSES
+
+    if size == "DGB" then
+        tableToSearch = LOKE_DGB_GLASSES
+    end
+
+
+    if style then
+
+        for typeName, entry in pairs(tableToSearch) do
+            if typeName == type then
+                print("found ", typeName)
+                for _, package in pairs(entry) do
+                if Helper:StringContains(package.name, style) then
+                    if size == "LOW" then
+                            return package.uuidLow
+                    else
+                            return package.uuidHigh
+                        end
+                    end
+                end
+            end
+        end
+
+
+    else
+
+        -- if style is nil then we have Frame, Arm or chain main.
+        -- In this case return the first entry, as there is no style
+
+
+        for typeName, entry in pairs(tableToSearch) do
+            if typeName == type then
+                for _, package in pairs(entry) do
+                    if size == "LOW" then
+                        return entry[1].uuidLow
+                    else
+                        return entry[1].uuidHigh
+                    end
+                end
+                
+            end
+        end
+
+
+    end
+
+end
+
+
+
+-- return a preset designed by lokelani
+---@param style enum ["PIXIE_KILLER", "NONE"]   
+---@param size enum ["LOW", "HIGH" "DGB"]   
+function Visuals:GetPresetVisuals(style, size)
+
+    local presetVisuals = {}
+    local tableToSearch
+
+
+
+    -- always add: "Frame", "Arms" and "Chain Main"
+    -- for DGB add "FRAME"
+    if size == "DGB" then
+        tableToSearch = LOKE_DGB_GLASSES
+        table.insert(presetVisuals, Visuals:GetVisual(nil, "FRAME", size))
+    else
+        tableToSearch = LOKE_HUMAN_GLASSES
+        table.insert(presetVisuals, Visuals:GetVisual(nil, "FRAME", size))
+        table.insert(presetVisuals, Visuals:GetVisual(nil, "ARMS", size))
+        table.insert(presetVisuals, Visuals:GetVisual(nil, "CHAINS_MAIN", size))
+    end
+
+
+
+    for typeName, entry in pairs(tableToSearch) do
+        for _, package in pairs(entry) do
+        if Helper:StringContains(package.name, style) then
+            if size == "LOW" then
+                table.insert(presetVisuals,package.uuidLow)
+            else
+                table.insert(presetVisuals,package.uuidHigh)
+                end
+            end
+        end
+    end
+
+    return presetVisuals
+
+end
+
+
+-- equip a preset designed by lokelani
+---@param character string
+---@param style enum ["PIXIE_KILLER", "NONE"]   
+---@param size enum ["LOW", "HIGH"m "DGB"]   
+function Visuals:EquipPreset(character, style, size)
+
+
+    -- remove current glasses
+    local currentlyEquippedGlasses = Visuals:GetAllGlassesVisuals(character)
+    Visuals:RemoveListOfVisuals(character, currentlyEquippedGlasses)
+    
+
+    Ext.Timer.WaitFor(200, function ()
+
+        if not (style == "NONE") then
+            -- get all preset visuals
+            local presetVisuals = Visuals:GetPresetVisuals(style, size)
+    
+            -- equip all preset visuals 
+            Visuals:AddListOfVisuals(character, presetVisuals)
+
+            Ext.Timer.WaitFor(200, function ()
+                Visuals:MatchChain(character)
+                
+            end)
+        end
+    
+        
+    end)
+  
+    
 end
 
 

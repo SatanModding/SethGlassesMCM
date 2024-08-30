@@ -1,4 +1,4 @@
--- Move to IMGUI
+-- Move to IMGUI if we can figure out why borked
 Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(_, _)
     local party = Osi.DB_PartyMembers:Get(nil)
     for i = #party, 1, -1 do

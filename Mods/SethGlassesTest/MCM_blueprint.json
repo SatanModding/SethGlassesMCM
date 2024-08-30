@@ -22,7 +22,7 @@
                                 ]
                             },
                             "Default": "On",
-                            "Description": "Toggle Glasses On or Off."
+                            "Description": "Toggle Glasses On or Off. \n\nMake sure that glasses are toggled \"ON\" when entering the Magic Mirror \nIf you forgot to so this and unexpected things happen,\nsimply choose the \"Nothing\" preset"
                         }
                     ]
                 }

@@ -1,19 +1,16 @@
 
-// This will be moved to IMGUI instead
-
-new entry "LOKE_GLASSES_TAKE_OFF_GLASSES_BOOST"  
-type "StatusData"
-data "StatusType" "BOOST"
-data "DisplayName" "h74319446fe094b24ab3c39897cda41531d17"
-data "Icon" "PUT_YOUR_ICON_NAME_HERE"
-data "StackId" "LOKE_GLASSES_TAKE_OFF_GLASSES_BOOST"
-
-
-
 new entry "LOKE_GLASSES_GIVE_GLASSES_BOOST"  
 type "StatusData"
 data "StatusType" "BOOST"
-data "DisplayName" "h74319446fe094b24ab3c39897cda41531d17"
-data "Icon" "PUT_YOUR_ICON_NAME_HERE"
 data "StackId" "LOKE_GLASSES_GIVE_GLASSES_BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
+
+
+new entry "LOKE_GLASSES_REMOVE_GLASSES_BOOST"  
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "LOKE_GLASSES_REMOVE_GLASSES_BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+
 

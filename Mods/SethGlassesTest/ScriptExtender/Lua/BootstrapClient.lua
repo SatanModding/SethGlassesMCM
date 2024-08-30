@@ -1,9 +1,15 @@
 
+Ext.Require("Shared/Utils/Table.lua")
+Ext.Require("Shared/Utils/Helper.lua")
+
+
 Ext.Require("Client/Definitions.lua")
 Ext.Require("Client/MCMHelper.lua")
 Ext.Require("Client/MCMHelper.lua")
 Ext.Require("Client/SatanDoesIMGUI.lua")
 Ext.Require("Client/MCM.lua")
+Ext.Require("Client/ClientServerCommunication.lua")
+
 
 
 

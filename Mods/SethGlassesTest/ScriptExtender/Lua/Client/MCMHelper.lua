@@ -51,7 +51,9 @@ end
 ---@param imageSize vec2 -- size of image
 ---@param tableSize vec2 -- size of table
 ---@param id string -- unique identifier for the table
-function MCMHelper:CreateTableOfImageAndDescription(parent, images, descriptions, imageSize, tableSize, id)
+---@param type enum - [PRESET, FRAME, ETC]
+function MCMHelper:CreateTableOfImageAndDescription(parent, images, descriptions, imageSize, tableSize, id, type)
+    local buttons = {}
     local myTable = parent:AddTable(id,#images)
    -- myTable.Borders = true
     myTable.Size = tableSize
@@ -59,13 +61,12 @@ function MCMHelper:CreateTableOfImageAndDescription(parent, images, descriptions
     local descRow = myTable:AddRow()
 
     for i, image in pairs(images) do
-        local imgbtn = imageRow:AddCell():AddImageButton(image,image, imageSize) 
+        local imgbtn = imageRow:AddCell():AddImageButton(image .. "_" .. type ,image, imageSize) 
+        table.insert(buttons, imgbtn)
         descRow:AddCell():AddText(descriptions[i])
-        imgbtn.OnClick = function()
-            _P("[DEBUG SETH_GLASSES] ", imgbtn.Image.Icon) -- use this to get the UUID
-            _P("[DEBUG SETH_GLASSES] parent: ", myTable.ParentElement.Label)
-        end
     end
+
+    return buttons
 end
 
 
@@ -76,7 +77,9 @@ end
 ---@param descriptions table - sorted table of strings
 ---@param size vec2 -- size ofimage
 ---@param id string -- unique identifier for the table
-function MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, images, descriptions, imageSize, tableSize, id)
+---@---@param type enum - [PRESET, FRAME, ETC]
+function MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, images, descriptions, imageSize, tableSize, id, type)
+    local buttons = {}
     local myTable = parent:AddTable(id,#images)
    -- myTable.Borders = true
     myTable.SameLine = true
@@ -85,11 +88,9 @@ function MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, images, desc
     local descRow = myTable:AddRow()
 
     for i, image in pairs(images) do
-        local imgbtn = imageRow:AddCell():AddImageButton(image,image, imageSize) 
+        local imgbtn = imageRow:AddCell():AddImageButton(image .. "_" .. type,image, imageSize) 
+        table.insert(buttons, imgbtn)
         descRow:AddCell():AddText(descriptions[i])
-        imgbtn.OnClick = function()
-            _P("[DEBUG SETH_GLASSES] ", imgbtn.Image.Icon) -- use this to get the UUID
-            _P("[DEBUG SETH_GLASSES] parent: ", myTable.ParentElement.Label)
-        end
     end
+    return buttons
 end

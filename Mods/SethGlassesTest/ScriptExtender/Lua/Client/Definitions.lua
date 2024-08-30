@@ -16,25 +16,25 @@ PRESET_IMAGES = {
     "ICON_LOKE_CANT_SEE", 
     "ICON_LOKE_MR_HEALING", 
     "ICON_LOKE_INFERNAL",
-    DEFAULT
+    "ICON_LOKE_NONE"
 }
 
 
 
 FRAME_IMAGES = {
-    DEFAULT,
-    DEFAULT
+    "ICON_LOKE_FRAME",
+    "ICON_LOKE_NONE"
 }
 
 
 ARMS_IMAGES = {
-    DEFAULT,
-    DEFAULT
+    "ICON_LOKE_ARMS",
+    "ICON_LOKE_NONE"
 }
 
 CHAIN_MAIN_IMAGES = {
-    DEFAULT,
-    DEFAULT
+    "ICON_LOKE_CHAIN",
+    "ICON_LOKE_NONE"
 }
 
 
@@ -44,13 +44,13 @@ FRAMES_TEXT = {
 }
 
 ARMS_TEXT = {
-    "Frame",
-    "No Frame"
+    "Arms",
+    "No Arms"
 }
 
 CHAIN_MAIN_TEXT = {
-    "Frame",
-    "No Frame"
+    "Chain",
+    "No Chain"
 }
 
 -- Plain only exists for glasses
@@ -76,7 +76,8 @@ LENSES_IMAGES = {
     "ICON_LOKE_CANT_SEE", 
     "ICON_LOKE_MR_HEALING", 
     "ICON_LOKE_INFERNAL",
-    DEFAULT
+    "ICON_LOKE_PLAIN",
+    "ICON_LOKE_NONE"
 }
 
 
@@ -104,7 +105,7 @@ CHARMS_LEFT_IMAGES = {
     "ICON_LOKE_CANT_SEE", 
     "ICON_LOKE_MR_HEALING", 
     "ICON_LOKE_INFERNAL",
-    DEFAULT
+    "ICON_LOKE_NONE"
 }
 
 
@@ -117,7 +118,7 @@ CHARMS_RIGHT1_IMAGES = {
     "ICON_LOKE_CANT_SEE", 
     "ICON_LOKE_MR_HEALING", 
     "ICON_LOKE_INFERNAL",
-    DEFAULT
+    "ICON_LOKE_NONE"
 }
 
 
@@ -131,5 +132,5 @@ CHARMS_RIGHT2_IMAGES = {
     "ICON_LOKE_CANT_SEE", 
     "ICON_LOKE_MR_HEALING", 
     "ICON_LOKE_INFERNAL",
-    DEFAULT
+    "ICON_LOKE_NONE"
 }

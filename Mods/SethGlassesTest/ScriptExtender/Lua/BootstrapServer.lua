@@ -6,6 +6,7 @@ Ext.Require("Shared/Utils/Table.lua")
 Ext.Require("Shared/Utils/Helper.lua")
 
 -- Main
+Ext.Require("Server/UserVars.lua")
 Ext.Require("Server/Race.lua")
 Ext.Require("Server/Visuals.lua")
 Ext.Require("Server/SpellAddition.lua")
@@ -13,12 +14,21 @@ Ext.Require("Server/PassiveAddition.lua")
 Ext.Require("Server/SpellListener.lua")
 Ext.Require("Server/PassiveListener.lua")
 Ext.Require("Server/MCMCommunication.lua")
+Ext.Require("Server/MCMCommunication.lua")
+Ext.Require("Server/ServerClientCommunication.lua")
 Ext.Require("Server/Main.lua")
+
 
 
 print("LOADED SETH MCM")
 
 
+
+-- Used to save glasses choices
+
+
+
+-- TODO - this can be used for a video
 Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(_, _)
 
 
