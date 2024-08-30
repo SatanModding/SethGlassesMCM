@@ -50,3 +50,7 @@ Ext.Osiris.RegisterListener("ChangeAppearanceCancelled", 1, "after", function(ch
 
 
 end)
+
+
+
+-- TODO - clicking Arms, Frame or chain on HIGH removes entire glasses 
