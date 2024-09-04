@@ -6,7 +6,7 @@ mcmUUID = "755a8a72-407f-4f0d-9a33-274ac0f0b53d"
 local none = "1f82fcd6-b6d2-4b4b-a7f6-64c6b4ae132c"
 
 TYPES = {
-    "PRESETS",
+    "PRESET",
     "FRAME",
     "ARMS",
     "LENSES",
@@ -33,7 +33,7 @@ STYLES = {
     "NONE"
 }
 
-
+-- TODO - Selection is broky become atlas changed
 
 local function isControlledCharacter(entity)
     if type(entity) == "string" then
@@ -76,16 +76,14 @@ SatanDoesIMGUI.__index = SatanDoesIMGUI
 local highGlassesTab
 
 
-print("DEFINED HIGH GLASSES TAB")
 
 -- TODO - client can'T acces this function. Send an event instead
 
 function SatanDoesIMGUI:GetHighGlassesTab()
-    print("returning ", highGlassesTab)
     return highGlassesTab
 end
 
-local function getType(str)
+function SatanDoesIMGUI:GetType(str)
     -- Loop through the TYPES to find the type in the spell string
     local type
     for _, t in ipairs(TYPES) do
@@ -99,7 +97,7 @@ local function getType(str)
 end
 
 
-local function getStyle(str)
+function SatanDoesIMGUI:GetStyle(str)
     -- Loop through the TYPES to find the type in the spell string
     local style
     for _, t in ipairs(STYLES) do
@@ -126,10 +124,10 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
         for _, tbl in pairs(tableOfTales) do
             for _ , btn in pairs(tbl) do
                 btn.OnClick = function()
-                    --print("name ", btn.Label)
-                    local type = getType(btn.Label)
-                    local style = getStyle(btn.Label)
-                
+                    local type = SatanDoesIMGUI:GetType(btn.Label)
+                    local style = SatanDoesIMGUI:GetStyle(btn.Label)
+
+                    
                     Ext.Net.PostMessageToServer("LOKE_GLASSES",Ext.Json.Stringify({size = "LOW", type = type, style = style}))
 
                     -- when sending to server check if size needs to be overriden to DGB
@@ -150,9 +148,8 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
         for _, tbl in pairs(tableOfTales) do
             for _ , btn in pairs(tbl) do
                 btn.OnClick = function()
-                    --print("name ", btn.Label)
-                    local type = getType(btn.Label)
-                    local style = getStyle(btn.Label)
+                    local type = SatanDoesIMGUI:GetType(btn.Label)
+                    local style = SatanDoesIMGUI:GetStyle(btn.Label)
                 
                     Ext.Net.PostMessageToServer("LOKE_GLASSES",Ext.Json.Stringify({size = "HIGH", type = type, style = style}))
                 end
@@ -167,7 +164,6 @@ end
 
 if Ext.Mod.IsModLoaded(mcmUUID) then
 
-    print("Populating Credits section")
 
     Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Credits and thanks", function(tab)
 
@@ -185,7 +181,7 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
 else
 
 
-    print("MCM is not loaded")
+    print("MCM is not loaded. Please download and activate it")
 end
 
 

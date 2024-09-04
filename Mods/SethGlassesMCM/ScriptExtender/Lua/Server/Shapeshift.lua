@@ -96,7 +96,7 @@ function Shapeshift:RevertEditability(character)
 
 
     -- anything faster than 500 fucks up the chain matching for my Lokelani glasses mcm mod
-    Ext.Timer.WaitFor(500, function ()
+    Ext.Timer.WaitFor(600, function ()
 
         if Shapeshift:IsShapeshifted(character) then
 

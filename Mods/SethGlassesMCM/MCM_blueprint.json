@@ -2,7 +2,7 @@
     "SchemaVersion": 1,
     "Tabs": [
         {
-            "TabName": "Seth's Glasses",
+            "TabName": "Toggle Glasses",
             "TabId": "general",
             "Sections": [
 
@@ -22,7 +22,7 @@
                                 ]
                             },
                             "Default": "On",
-                            "Description": "DOES NOT WORK IN THE MAGIC MIRROR OR CC\n\nToggle Glasses On or Off. \n\nMake sure that glasses are toggled \"ON\" when customizing,\nelse you choices cannot be saved.\nIf you forgot to so this and unexpected things happen,\nsimply choose the \"Nothing\" preset while they are toggled \"ON\""
+                            "Description": "DOES NOT WORK IN THE MAGIC MIRROR OR CC\n\nToggle Glasses On or Off. \n\nMake sure that glasses are toggled \"ON\" when customizing,\nelse you choices cannot be saved.\nIf you forgot to so this and unexpected things happen,\nsimply choose the \"Nothing\" preset while they are toggled \"ON\"\n\nThis will be automated for you in the next update"
                         }
                     ]
                 }

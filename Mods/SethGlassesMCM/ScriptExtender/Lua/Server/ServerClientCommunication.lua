@@ -19,28 +19,13 @@ Ext.Events.NetMessage:Subscribe(function(e)
         local type = payload.type
         local style = payload.style
 
-
-        local dragonbornChoseHigh = "\"High\" glasses are not available for dragonborns"
         local character = Osi.GetHostCharacter()
 
-        if IsDragonborn(character) and size == "HIGH" then
-            Osi.OpenMessageBox(character, dragonbornChoseHigh)
-        end
-
-        -- Eralyn sets her shapeshifted entities back to Type = 0 after using the mirror
-        --Shapeshift:ForceMakeEditable(character)
         Shapeshift:MakeEditable(character)
         DoTheThing(size, type, style)
         Shapeshift:RevertEditability(character)
-        --Shapeshift:ForceRevertEditability(character)
-    
-  
     end
-
-
-
 end)
-
 
 
 
@@ -49,9 +34,9 @@ function DoTheThing(size, type, style)
 
     local character = Osi.GetHostCharacter()
 
-     print("size " , size)
-     print("type ", type)
-     print("style " , style)
+    --  print("size " , size)
+    --  print("type ", type)
+    --  print("style " , style)
 
     if IsDragonborn(character) then
         
@@ -67,7 +52,7 @@ function DoTheThing(size, type, style)
 
 
 
-    if type == "PRESETS" then
+    if type == "PRESET" then
         Visuals:EquipPreset(character, style, size)
         return
     end
@@ -76,8 +61,8 @@ function DoTheThing(size, type, style)
 
     local currentGlassVisuals = Visuals:GetAllGlassesVisuals(character)
 
-    print("current visuals")
-    _D(currentGlassVisuals)
+    -- print("current visuals")
+    -- _D(currentGlassVisuals)
 
 
     local visual = Visuals:GetVisual(style, type, size)
@@ -86,9 +71,11 @@ function DoTheThing(size, type, style)
     --_D(currentGlassVisuals)
 
     -- if the character was previously wearing low,switch to high and vice versa
-    if Visuals:DifferentSize(currentGlassVisuals, visual) then
-        print("Size changed")
-        Visuals:SwapGlasses(character, size)
+    if not (style == "NONE") then
+        if Visuals:DifferentSize(currentGlassVisuals, visual) then
+            --print("Size changed")
+            Visuals:SwapGlasses(character, size)
+        end
     end
 
 

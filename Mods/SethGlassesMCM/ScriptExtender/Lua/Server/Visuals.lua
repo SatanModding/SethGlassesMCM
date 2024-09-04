@@ -30,7 +30,7 @@ SIZES = {
 ---@param character string -uuid
 ---@param listToAdd table 
 function Visuals:AddListOfVisuals(character, listToAdd)
-    
+
   
     if listToAdd then
 
@@ -39,9 +39,13 @@ function Visuals:AddListOfVisuals(character, listToAdd)
             Shapeshift:AddListOfVisuals(character, listToAdd)
         else
 
-            for _, entry in pairs(listToAdd) do
-                Osi.AddCustomVisualOverride(character, entry)
-            end
+            -- Not sure why but this timer is necessary
+            -- probably because removing them takes too long (for togglong on after GainedControl)
+            Ext.Timer.WaitFor(200, function ()
+                for _, entry in pairs(listToAdd) do
+                    Osi.AddCustomVisualOverride(character, entry)
+                end
+            end)
 		
         end
     end
@@ -147,12 +151,15 @@ function Visuals:GetAllGlassesVisuals(character)
 
     local allVisuals = Visuals:GetAllVisuals(character)
 
-    for _, visual in pairs(allVisuals) do
-        for _, content in pairs(listToSearch) do
-            for name, entry in pairs(content) do
-                for _, package in pairs(entry) do
-                    if (package.uuidLow == visual) or (package.uuidHigh == visual) then
-                        table.insert(glasses, visual)
+    if allVisuals then
+
+        for _, visual in pairs(allVisuals) do
+            for _, content in pairs(listToSearch) do
+                for name, entry in pairs(content) do
+                    for _, package in pairs(entry) do
+                        if (package.uuidLow == visual) or (package.uuidHigh == visual) then
+                            table.insert(glasses, visual)
+                        end
                     end
                 end
             end
@@ -757,7 +764,7 @@ function Visuals:EquipPreset(character, style, size)
             -- equip all preset visuals 
             Visuals:AddListOfVisuals(character, presetVisuals)
 
-            Ext.Timer.WaitFor(200, function ()
+            Ext.Timer.WaitFor(300, function ()
                 Visuals:MatchChain(character)
                 
             end)

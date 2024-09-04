@@ -36,7 +36,6 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
 
         Shapeshift:MakeEditable(object)
 
-        print("remove glasses")
         local previousGlasses = Visuals:GetAllGlassesVisuals(object)
         Visuals:RemoveListOfVisuals(object, previousGlasses)
 

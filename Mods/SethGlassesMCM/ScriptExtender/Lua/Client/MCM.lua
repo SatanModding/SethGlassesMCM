@@ -3,6 +3,33 @@ MCM.__index = MCM
 
 
 
+local armsTable
+local chainsTable
+local dgbWarningArm
+local dgbWarningChain
+
+
+
+function MCM:HideForDGB()
+
+    armsTable.Visible = false
+    chainsTable.Visible = false
+    dgbWarningArm.Visible = false
+    dgbWarningChain.Visible = false
+
+end
+
+
+function MCM:showForNoneDGB()
+    armsTable.Visible = true
+    chainsTable.Visible = true
+    dgbWarningArm.Visible = false
+    dgbWarningChain.Visible = false
+end
+
+
+
+
 -- TODO - names don't have to be appended anymore with the new atlas from loke
 
 ---@param return - list of Buttons I want to use OnClick on
@@ -60,14 +87,16 @@ function MCM:CreateGlasses(type, parent)
 
     local size = {100,100}
 
+    -- TODO : chain main broken
+
     -------------------------
-    --       PRESETS       --
+    --       PRESET       --
     -------------------------
     
     -- spearator
     MCMHelper:CreateWhiteText(parent, MCMHelper:EmptyText(120) .. "Presets")
 
-    local buttons1 = MCMHelper:CreateTableOfImageAndDescription(parent, PRESET_IMAGES, NAMES, size, DEFAULT_TABLESIZE, "presetsTable", "PRESETS")
+    local buttons1 = MCMHelper:CreateTableOfImageAndDescription(parent, PRESET_IMAGES, NAMES, size, DEFAULT_TABLESIZE, "presetsTable", "PRESET")
     table.insert(allButtons, buttons1)
   
     -------------------------
@@ -81,8 +110,8 @@ function MCM:CreateGlasses(type, parent)
     -----------------------------------------------
     
     local arms_chains_suffix = ""
-    local arms = 80
-    local chains = 80
+    local arms = 60
+    local chains = 35
 
     if type == "HIGH" then
         arms_chains_suffix = " (Toggle off for large heads)"
@@ -93,7 +122,14 @@ function MCM:CreateGlasses(type, parent)
    
     MCMHelper:CreateWhiteText(parent, MCMHelper:EmptyText(19) .. "Frame")
     MCMHelper:AddTextSameLineWhite(parent,MCMHelper:EmptyText(arms) .. "Arms" .. arms_chains_suffix)
+
+    if type == "LOW" then
+        dgbWarningArm = MCMHelper:AddTextSameLine(parent, "not available for DGB")
+    end
     MCMHelper:AddTextSameLineWhite(parent,MCMHelper:EmptyText(chains) .. "Chains" .. arms_chains_suffix)
+    if type == "LOW" then
+        dgbWarningChain = MCMHelper:AddTextSameLine(parent,"not available for DGB")
+    end
 
     -----------------------------------------------
     --       Frame  , Arms,  Chains  Images      --
@@ -104,11 +140,27 @@ function MCM:CreateGlasses(type, parent)
 
     -- Images Frame
     local buttons2 = MCMHelper:CreateTableOfImageAndDescription(parent, FRAME_IMAGES, FRAMES_TEXT, size, THREE_TABLE_TABLESIZE,  "frametable", "FRAME")
-    local buttons3 = MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, ARMS_IMAGES, ARMS_TEXT, size, THREE_TABLE_TABLESIZE, "armstable", "ARMS")
-    local buttons4 = MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, CHAIN_MAIN_IMAGES, CHAIN_MAIN_TEXT, size, THREE_TABLE_TABLESIZE, "chainmaintable", "CHAINS_MAIN")
+    local buttons3, myArmsTable = MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, ARMS_IMAGES, ARMS_TEXT, size, THREE_TABLE_TABLESIZE, "armstable", "ARMS")
+
+    local buttons4, myChainsTable = MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, CHAIN_MAIN_IMAGES, CHAIN_MAIN_TEXT, size, THREE_TABLE_TABLESIZE, "chainmaintable", "CHAINS_MAIN")
+   
+   
+    -- Auto hide those buttons for DGB. Couldn't get it to work for release
+    armsTable = myArmsTable
+    chainsTable = myChainsTable
+    armsTable.Visible = true
+    chainsTable.Visible = true
+    dgbWarningArm.Visible = true
+    dgbWarningChain.Visible = true
+
+
+    
     table.insert(allButtons, buttons2)
     table.insert(allButtons, buttons3)
     table.insert(allButtons, buttons4)
+    
+
+
 
 
     -------------------------

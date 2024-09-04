@@ -28,21 +28,65 @@ end)
 
 
 
+-- AEE support
+Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster, spell, _, _, _)
+
+    if spell == "Shout_Open_Mirror" then
+
+        Mods.BG3MCM.MCMAPI:SetSettingValue("toggle_glasses", "On", ModuleUUID)
+        Visuals:RetrieveAndApplyGlasses(caster)
+    end
+end)
+
+
+local previouslyControlled 
+
+
 Ext.Osiris.RegisterListener("GainedControl", 1, "after", function(target)  
 
     if Ext.Mod.IsModLoaded(mcmUUID) then
 
+        local settingPreviouslyControlled
+        local glassesPreviouslyControlled
+
+        if previouslyControlled then
+            -- save glasses of previously controlled character, but only if setting if toggled on
+
+            local settingPreviouslyControlled = UserVars:GetGlassesSetting(previouslyControlled)
+            glassesPreviouslyControlled =  Visuals:GetAllGlassesVisuals(previouslyControlled)
+
+            if settingPreviouslyControlled == "ON" then
+                UserVars:AssignGlasses(glassesPreviouslyControlled, previouslyControlled)
+            end
+        end
+
         local hasGlasses = UserVars:GetGlassesSetting(target)
+        local currentGlasses = UserVars:GetGlasses(target)
+
+        -- TODO - Astarion after using AEE and reloading does not count as shapeshifted
+        -- and displays items Osi.Add. However they are getting added to his A override
+        -- Yeah, this is an issue for all non  shapeshifted one. The regular addition seems broken
+        
         if not(hasGlasses) or (hasGlasses == "ON") then
             Mods.BG3MCM.MCMAPI:SetSettingValue("toggle_glasses", "On", ModuleUUID)
         else
             Mods.BG3MCM.MCMAPI:SetSettingValue("toggle_glasses", "Off", ModuleUUID)
+
+            -- override UserVars change 
+            if hasGlasses == "OFF" then
+
+                UserVars:AssignGlasses(currentGlasses, target)
+
+            end
+            
         end
 
 
         -- send message requesting tab being made invisible if DGB
         -- or to make visible if not
-        Ext.Net.BroadcastMessage("ChangeVisibilityOfHighTab",Ext.Json.Stringify({isDragonborn = IsDragonborn(target)}))
+        Ext.Net.BroadcastMessage("ChangeVisibilityOfDGBTab",Ext.Json.Stringify({isDragonborn = IsDragonborn(target)}))
+
+        previouslyControlled = target
 
     end
 end)
@@ -58,8 +102,6 @@ local function giveBackGlasses(character)
     local hasGlasses = UserVars:GetGlassesSetting(character)
     local glasses = UserVars:GetGlasses(character)
 
-    print("glasses")
-    _D(glasses)
 
     if glasses then
         if not(hasGlasses) or (hasGlasses == "ON") then
@@ -86,43 +128,77 @@ local function getTheGang()
     return gang
 end
 
+local function revertAEELoadedActions()
 
--- AEE yeets glasses. Add them again 
+    local gang = getTheGang()
+    for _, character in pairs(gang) do
+        giveBackGlasses(character)
+    end
+
+end
+
+
+local function revertAEESaveCleanup()
+    
+    local gang = getTheGang()
+
+    for _, character in pairs(gang) do
+        local glasses = Visuals:GetAllGlassesVisuals(character)
+        local glassesChoice = UserVars:GetGlassesSetting(character)
+        if glasses then
+
+            -- If the glasses are off, we don't want to override the UserVars with empty ones
+            if glassesChoice == "OFF" then
+                return
+            end
+            UserVars:AssignGlasses(glasses, character)
+        end
+
+    end
+end
+
+
+-- TODO - test if this causes issues when AEE is not installed.
+-- If yes just run this when SEE is detected
+
+
+-- AEE yeets glasses. Add them again, Basically reverts AEEs cleanup 
 Ext.Events.GameStateChanged:Subscribe(function(e)
 
     -- only seems necessary for shapeshifted
 
-    -- might not need this one
+    -- If glasses toggled ON, reapply them from UserVars
+    -- AEE yeets them
+
+
+
+     -- ----------------------------- Loaded ------------------------------ --
+
+
+     if e.FromState == "Sync" and e.ToState == "Running" then
+        revertAEELoadedActions()
+    end
+
+    -- ----------------------------- Before Saving ------------------------------ --
+    if e.FromState == "Running" and e.ToState == "Save" then
+        revertAEESaveCleanup()
     
-    if e.FromState == "Save" and e.ToState == "Running" then
+    -- -------------------------------- Post Save ------------------------------- --
+    elseif e.FromState == "Save" and e.ToState == "Running" then
+        revertAEELoadedActions()
 
-        -- If glasses toggled ON, reapply them from UserVars
-        -- AEE yeets them
+       -- ------------------ Go back to main ------------------ --
+    elseif e.FromState == "Running" and e.ToState == "UnloadLevel" then
+        revertAEESaveCleanup()
 
-        print("running")
-
-        local gang = getTheGang()
-
-        for _, character in pairs(gang) do
-            print("giving glasses to ", character)
-            giveBackGlasses(character)
-        end
-    end
-
-
-    if e.FromState == "Sync" and e.ToState == "Running" then
-
-        -- If glasses toggled ON, reapply them from UserVars
-        -- AEE yeets them
-
-
-        local gang = getTheGang()
-
-        for _, character in pairs(gang) do
-            giveBackGlasses(character)
-        end
+        -- ------------------ Load save ------------------ --
+        -- DB avatars doesn't exist here yet
+    -- elseif e.FromState == "UnloadSession" and e.ToState == "LoadSession" then
+    --     RevertAEESaveCleanup()
+    -- end
 
     end
+
 
 end)
 
@@ -133,12 +209,14 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(_, _)
 
     -- send message requesting tab being made invisible if DGB
     -- or to make visible if not
-    Ext.Net.BroadcastMessage("ChangeVisibilityOfHighTab",Ext.Json.Stringify({isDragonborn = IsDragonborn(Osi.GetHostCharacter())}))
+    Ext.Net.BroadcastMessage("ChangeVisibilityOfDGBTab",Ext.Json.Stringify({isDragonborn = IsDragonborn(Osi.GetHostCharacter())}))
+    previouslyControlled = Osi.GetHostCharacter()
 
 
 end)
 
 
+-- TODO - move AEE stuff to AEE files
 
 
       
@@ -146,3 +224,20 @@ end)
 
 -- TODO - UserVars only get saved when toggling on/off -> gotta use another method to
 -- reapply visuals after AEE removes them -> save to UserVars before game saved etc.?
+
+
+-- TODO - toggling glassess off and on on Astarion , then switching to Tav an dtoggling them off and on,
+-- Then switching back to astarion yeets them. 
+-- Probably because UserVars get overwritten on selecting character
+
+
+-- TODO - Chain matching does not work for presets.. Probably a timer issue
+
+
+-- TODO - remove arm and chain option for DGB and replace by test : "Not available for DGB"
+
+-- TODO - Wyll /Tav might have reset on save / load and then entering convo. Seems to be related to saving and loading
+
+-- TODO - toggle glasses ON if user chooses any visual (presses any button)
+
+-- TODO - when having glasses toggled off, then saving, they seem to get lost

@@ -599,7 +599,6 @@ function Entity:GiveShapeshiftedVisual(character, visual)
 
     -- usually this component never exists. AAE creates one too
     if (not entity.AppearanceOverride) then
-        print("Adding Component")
         entity:CreateComponent("AppearanceOverride") -- TODO: instead of timers subscribe to entity component
     end
         

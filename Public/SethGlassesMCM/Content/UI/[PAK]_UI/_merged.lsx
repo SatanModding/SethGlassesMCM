@@ -5,11 +5,11 @@
 		<node id="TextureBank">
 			<children>
 				<node id="Resource">
-					<attribute id="ID" type="FixedString" value="96ec3d51-dcb3-4871-a681-f646cbb1536e" />
+					<attribute id="ID" type="FixedString" value="f7e18ae6-9689-401e-afe0-18e08689aefc" />
 					<attribute id="Localized" type="bool" value="False" />
 					<attribute id="Name" type="LSString" value="Icons_SethGlassesMCM" />
 					<attribute id="SRGB" type="bool" value="True" />
-					<attribute id="SourceFile" type="LSString" value="Public/SethGlassesMCM/Assets/Textures/Icons/Icons_SethGlassesMCM.dds" />
+					<attribute id="SourceFile" type="LSString" value="Public/SethGlassesMCM/Assets/Textures/Icons/Icons_SethGlassesMCM.DDS" />
 					<attribute id="Streaming" type="bool" value="True" />
 					<attribute id="Template" type="FixedString" value="Icons_Items" />
 					<attribute id="Type" type="int32" value="0" />

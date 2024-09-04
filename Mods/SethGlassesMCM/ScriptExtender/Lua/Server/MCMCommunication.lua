@@ -12,23 +12,21 @@ end
 -- TODO - if user chooses any glasses part, set "Toggle ON " - else they just get overridden once  the user 
 -- presses "On"
 
-Ext.RegisterNetListener("MCM_Saved_Setting", function(call, payload)
-    local data = Ext.Json.Parse(payload)
-    if not data or data.modGUID ~= ModuleUUID or not data.settingId then
+Ext.ModEvents.BG3MCM["MCM_Setting_Saved"]:Subscribe(function(payload)
+    if not payload or payload.modUUID ~= ModuleUUID or not payload.settingId then
         return
     end
 
-    print("MCM_Saved_Setting received ", data.value) -- this works in the public version but not in the one you sent
 
 
     -- TODO - these have to be set based on character (on character change) - else they stay on the same choice
     -- TODO  - block usage in MM
-    if data.settingId == "toggle_glasses" then
+    if payload.settingId == "toggle_glasses" then
 
         local character = Osi.GetHostCharacter()
 
         -- TODO - assigning glasses settings might screw stuff up
-        if data.value == "On" then
+        if payload.value == "On" then
         
             Shapeshift:MakeEditable(character)
             Visuals:RetrieveAndApplyGlasses(character)
@@ -36,7 +34,8 @@ Ext.RegisterNetListener("MCM_Saved_Setting", function(call, payload)
 
             UserVars:AssignGlassesSetting("ON", character)
 
-        elseif data.value == "Off" then
+        elseif payload.value == "Off" then
+
             
             Shapeshift:MakeEditable(character)
             Visuals:SaveAndRemoveGlasses(character)
@@ -57,11 +56,5 @@ end)
 
 -- TODO - also swap settings when  controlled character is switched.
 -- save "actual" settings in UserVars
-
-
-
-
-
-
 
 

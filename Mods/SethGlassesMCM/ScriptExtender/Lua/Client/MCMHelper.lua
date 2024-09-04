@@ -33,6 +33,7 @@ end
 function MCMHelper:AddTextSameLine(parent,text)
     local textField = parent:AddText(text)
     textField.SameLine = true
+    return textField
 end
 
 
@@ -43,6 +44,7 @@ function MCMHelper:AddTextSameLineWhite(parent,text)
     local textField = parent:AddText(text)
     textField:SetColor(0,WHITE)
     textField.SameLine = true
+    return textField
 end
 
 ---@param parent IMGUI
@@ -60,13 +62,28 @@ function MCMHelper:CreateTableOfImageAndDescription(parent, images, descriptions
     local imageRow = myTable:AddRow()
     local descRow = myTable:AddRow()
 
+  
+    -- TODO - ugly pre release rush
+
     for i, image in pairs(images) do
-        local imgbtn = imageRow:AddCell():AddImageButton(image .. "_" .. type ,image, imageSize) 
+    --local imgbtn = imageRow:AddCell():AddImageButton(image .. "_" .. type,image, imageSize) 
+
+
+    local imageLabel = image
+    local style = SatanDoesIMGUI:GetStyle(image)
+    local type = SatanDoesIMGUI:GetType(images[1])
+    if style == "NONE" then
+        imageLabel = image .. type
+    end
+
+
+    local imgbtn = imageRow:AddCell():AddImageButton(imageLabel,image, imageSize) 
+
         table.insert(buttons, imgbtn)
         descRow:AddCell():AddText(descriptions[i])
     end
 
-    return buttons
+    return buttons, myTable
 end
 
 
@@ -87,10 +104,20 @@ function MCMHelper:CreateTableOfImageAndDescriptionSameLine(parent, images, desc
     local imageRow = myTable:AddRow()
     local descRow = myTable:AddRow()
 
+    -- TODO - ugly pre release rush
+
     for i, image in pairs(images) do
-        local imgbtn = imageRow:AddCell():AddImageButton(image .. "_" .. type,image, imageSize) 
+    
+        local imageLabel = image
+        local style = SatanDoesIMGUI:GetStyle(image)
+        local type = SatanDoesIMGUI:GetType(images[1])
+        if style == "NONE" then
+            imageLabel = image .. type
+        end
+
+        local imgbtn = imageRow:AddCell():AddImageButton(imageLabel,image, imageSize) 
         table.insert(buttons, imgbtn)
         descRow:AddCell():AddText(descriptions[i])
     end
-    return buttons
+    return buttons, myTable
 end
