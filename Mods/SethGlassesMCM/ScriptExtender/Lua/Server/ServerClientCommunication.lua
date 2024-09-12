@@ -1,7 +1,14 @@
+----------------------------------------------------------------------------------------
+--
+--               For sending  messages from Server to Client
+--               And receiving messages frmm Client to Server
+--
+----------------------------------------------------------------------------------------
+
+
+
 ServerClientCommunication = {}
 ServerClientCommunication.__index = ServerClientCommunication
-
-
 
 
 
@@ -9,6 +16,9 @@ ServerClientCommunication.__index = ServerClientCommunication
 -- PostMessageToServer is Client -> Server 
 
 
+
+
+-- receive message about what change should be made
 Ext.Events.NetMessage:Subscribe(function(e)
 
 
@@ -24,19 +34,21 @@ Ext.Events.NetMessage:Subscribe(function(e)
         Shapeshift:MakeEditable(character)
         DoTheThing(size, type, style)
         Shapeshift:RevertEditability(character)
+        Visuals:Replicate(character)
     end
 end)
 
 
 
-
+-- main function that calls the visual changes
 function DoTheThing(size, type, style)
 
     local character = Osi.GetHostCharacter()
 
-    --  print("size " , size)
-    --  print("type ", type)
-    --  print("style " , style)
+    SatanPrint(GLOBALDEBUG, "size " .. size)
+    SatanPrint(GLOBALDEBUG, "type " .. type)
+    SatanPrint(GLOBALDEBUG, "style " .. style)
+
 
     if IsDragonborn(character) then
         
@@ -51,29 +63,23 @@ function DoTheThing(size, type, style)
     end
 
 
-
     if type == "PRESET" then
         Visuals:EquipPreset(character, style, size)
         return
     end
 
     
-
     local currentGlassVisuals = Visuals:GetAllGlassesVisuals(character)
 
-    -- print("current visuals")
-    -- _D(currentGlassVisuals)
-
+    SatanPrint(GLOBALDEBUG, "current visuals")
+    SatanDump(GLOBALDEBUG, currentGlassVisuals)
 
     local visual = Visuals:GetVisual(style, type, size)
-
-    --_P("current glasses visuals")
-    --_D(currentGlassVisuals)
 
     -- if the character was previously wearing low,switch to high and vice versa
     if not (style == "NONE") then
         if Visuals:DifferentSize(currentGlassVisuals, visual) then
-            --print("Size changed")
+            SatanPrint(GLOBALDEBUG,"Size changed" )
             Visuals:SwapGlasses(character, size)
         end
     end
@@ -91,7 +97,7 @@ function DoTheThing(size, type, style)
         -- match the chain so it looks good
 
         -- Chain matching broken for lower right LOW and DGB
-        --print("Matching chains")
+        SatanPrint(GLOBALDEBUG, "Matching chains")
         Visuals:MatchChain(character)
     end)
 

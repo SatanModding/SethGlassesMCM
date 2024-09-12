@@ -1,7 +1,18 @@
+----------------------------------------------------------------------------------------
+--
+--                             Adding custom tabs to MCM             
+--
+----------------------------------------------------------------------------------------
+
+
+
+
 MCM = {}
 MCM.__index = MCM
 
 
+
+-- currently unused. Couldn't get it to work for the release
 
 local armsTable
 local chainsTable
@@ -9,9 +20,7 @@ local dgbWarningArm
 local dgbWarningChain
 
 
-
 function MCM:HideForDGB()
-
     armsTable.Visible = false
     chainsTable.Visible = false
     dgbWarningArm.Visible = false
@@ -30,52 +39,9 @@ end
 
 
 
--- TODO - names don't have to be appended anymore with the new atlas from loke
-
----@param return - list of Buttons I want to use OnClick on
-function MCM:CreateOptometry(parent)
-
-    MCMHelper:CreateWhiteSeparator(parent, "Optometry")
-
-    parent:AddText(MCMHelper:EmptyText(0) .. "Bring Fashion and good eyesight to the people of Faerun")
-    parent:AddText("") 
-
-    -- shouldn't be necessary as this is saved anyways in UserVars
-
-    -- local copyGlassesButton = parent:AddButton("Copy Glasses from self")
-    -- MCMHelper:CreateWhiteText(parent, "Copy your glasses preset to paste it onto another entity.")
-    -- copyGlassesButton.OnClick = function()
-    --     _D("[DEBUG SETH_GLASSES] Copy Glasses to Target was clicked!")
-    -- end
- 
-    -- parent:AddText("")
-
-    local pasteGlassesButton = parent:AddButton("Paste Glasses to Target")
-    MCMHelper:CreateWhiteText(parent, "Paste your saved preset onto another entity.")
-    pasteGlassesButton.OnClick = function()
-        _D("[DEBUG SETH_GLASSES] Paste Glasses to Targett was clicked!")
-    end
-
-    parent:AddText("")
-
-    local removeGlassesFromTargetButton = parent:AddButton("Remove Glasses from Target")
-    MCMHelper:CreateWhiteText(parent, "Remove glasses from the targeted entity")
-    removeGlassesFromTargetButton.OnClick = function()
-        _D("[DEBUG SETH_GLASSES] Remove Glasses was clicked!")
-    end
-
-    parent:AddText("")
-
-    return {copyGlassesButton, pasteGlassesButton, removeGlassesFromTargetButton}
-    
-end
-
-
-
+-- Design off the tabs
 ---@param type enum "LOW" or "HIGH"
 function MCM:CreateGlasses(type, parent)
-
-
 
     parent:AddText("DOES NOT WORK IN THE MAGIC MIRROR OR CC\n")
 
@@ -153,16 +119,11 @@ function MCM:CreateGlasses(type, parent)
     dgbWarningArm.Visible = true
     dgbWarningChain.Visible = true
 
-
     
     table.insert(allButtons, buttons2)
     table.insert(allButtons, buttons3)
     table.insert(allButtons, buttons4)
     
-
-
-
-
     -------------------------
     --       Lenses        --
     -------------------------

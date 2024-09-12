@@ -134,12 +134,6 @@ function Helper:CreateLocationMarker(uuid)
 end
 
 
--- Destroys a marker
----@param marker    string  - The Marker UUID to destroy 
-function Helper:DestroyMarker(marker)
-    Osi.RequestDelete(marker)
-end
-
 
 -- Credit to FallenStar  https://github.com/FallenStar08/SharedCode
 -- Slightly modified version

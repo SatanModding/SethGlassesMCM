@@ -1,3 +1,11 @@
+----------------------------------------------------------------------------------------
+--
+--                      Constants, like icon names and descriptions               
+--
+----------------------------------------------------------------------------------------
+
+
+
 WHITE = {1.0, 1.0, 1.0, 1.0}
 
 DEFAULT_TABLESIZE = {1200, 120}
@@ -5,10 +13,12 @@ DEFAULT_TABLESIZE = {1200, 120}
 THREE_TABLE_TABLESIZE = {400, 120}
 
 
-
--- TODO - rename these when I get the new atlas
-
+-- Default Icon (pepe thumbs up) for testing
 DEFAULT = "PUT_YOUR_ICON_NAME_HERE"
+
+
+-- IMAGES are the atlas names
+-- TEXT is the corresponding description
 
 PRESET_IMAGES = {
     "ICON_LOKE_PIXIE_KILLER_PRESET",

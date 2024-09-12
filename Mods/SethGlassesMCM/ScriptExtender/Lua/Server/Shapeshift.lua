@@ -1,3 +1,12 @@
+-------------------------------------------------------------------------------------------------------------
+---
+---                                 For Handling Visuals (CCAV/CCSV)
+---                              For entities that are of GameObjectType = 2    
+---                         They pull from entity.AppearanceOverride.Visual.Visuals
+--- 
+------------------------------------------------------------------------------------------------------------
+
+
 
 Shapeshift = {}
 Shapeshift.__index = Shapeshift
@@ -134,8 +143,6 @@ function Shapeshift:RemoveCustomVisualOvirride(character, visual)
     entity.AppearanceOverride.Visual.Visuals = visuals
 
 end
-
-
 
 
 

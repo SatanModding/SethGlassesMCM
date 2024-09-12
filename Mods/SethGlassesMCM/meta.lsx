@@ -11,7 +11,7 @@
               <attribute id="MD5" type="LSString" value="" />
               <attribute id="Name" type="FixedString" value="Mod Configuration Menu" />
               <attribute id="UUID" type="FixedString" value="755a8a72-407f-4f0d-9a33-274ac0f0b53d" />
-              <attribute id="Version64" type="int64" value="37576909390872576" />
+              <attribute id="Version64" type="int64" value="37999128298389504" />
             </node>
             <node id="ModuleShortDesc">
               <attribute id="Folder" type="LSWString" value="SethGlasses" />
@@ -38,7 +38,7 @@
           <attribute id="Tags" type="LSString" value="" />
           <attribute id="Type" type="FixedString" value="" />
           <attribute id="UUID" type="FixedString" value="dbdea5b5-a48c-4ea2-b3cb-32ba079e09d4" />
-          <attribute id="Version64" type="int64" value="36028797018963968" />
+          <attribute id="Version64" type="int64" value="36169534507319296" />
           <children>
             <node id="PublishVersion">
               <attribute id="Version64" type="int64" value="36028797018963968" />

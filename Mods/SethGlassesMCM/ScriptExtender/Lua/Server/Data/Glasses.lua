@@ -6,16 +6,10 @@
 
 
 
--- None entry {invalid uuid}
-
-
-local none = "1f82fcd6-b6d2-4b4b-a7f6-64c6b4ae132c" --invalid uuid that points to nothing
-local noneHandle = "h78968a37737f470a9ead0e8431d4439c69dg" -- "None"
-
-
 --{{name = "", uuidLow = "", uuidHigh = ""},},
 
--- put both low and high here to map them to each other
+
+-- Human = not DGB
 LOKE_HUMAN_GLASSES = {
 
     ["FRAME"] = {
@@ -97,7 +91,6 @@ LOKE_HUMAN_GLASSES = {
 
 
 
-
 LOKE_DGB_GLASSES = {
 
   ["FRAME"] = {
@@ -169,6 +162,4 @@ LOKE_DGB_GLASSES = {
   }
 
 }
-
- 
 

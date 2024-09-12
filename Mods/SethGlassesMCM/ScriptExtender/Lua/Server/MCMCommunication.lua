@@ -8,29 +8,25 @@ end
 
 
 
-
--- TODO - if user chooses any glasses part, set "Toggle ON " - else they just get overridden once  the user 
--- presses "On"
-
+-- Toggling Glases on and off
+-- This way is a bit janky, but I wanted to try out MCM 
 Ext.ModEvents.BG3MCM["MCM_Setting_Saved"]:Subscribe(function(payload)
     if not payload or payload.modUUID ~= ModuleUUID or not payload.settingId then
         return
     end
 
 
-
-    -- TODO - these have to be set based on character (on character change) - else they stay on the same choice
     -- TODO  - block usage in MM
     if payload.settingId == "toggle_glasses" then
 
         local character = Osi.GetHostCharacter()
 
-        -- TODO - assigning glasses settings might screw stuff up
         if payload.value == "On" then
         
             Shapeshift:MakeEditable(character)
             Visuals:RetrieveAndApplyGlasses(character)
             Shapeshift:RevertEditability(character)
+            Visuals:Replicate(character)
 
             UserVars:AssignGlassesSetting("ON", character)
 
@@ -40,21 +36,11 @@ Ext.ModEvents.BG3MCM["MCM_Setting_Saved"]:Subscribe(function(payload)
             Shapeshift:MakeEditable(character)
             Visuals:SaveAndRemoveGlasses(character)
             Shapeshift:RevertEditability(character)
+            Visuals:Replicate(character)
 
             UserVars:AssignGlassesSetting("OFF", character)
 
         end
     end
 end)
-
-
-
-
--- After applying, get visuals. If there is no glasses, the set Glasses to Off
--- if there are, set them to on
-
-
--- TODO - also swap settings when  controlled character is switched.
--- save "actual" settings in UserVars
-
 

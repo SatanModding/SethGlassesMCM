@@ -1,9 +1,18 @@
+----------------------------------------------------------------------------------------
+--
+--                  IMGUI helper functions for creating IMGIO objects            
+--
+----------------------------------------------------------------------------------------
 
--- Aahz : and if you're populating a thing, might AddGroup(), and use that group to :AddButton() or whatever
 
-mcmUUID = "755a8a72-407f-4f0d-9a33-274ac0f0b53d"
 
-local none = "1f82fcd6-b6d2-4b4b-a7f6-64c6b4ae132c"
+SatanDoesIMGUI = {}
+SatanDoesIMGUI.__index = SatanDoesIMGUI
+
+
+MCMUUID = "755a8a72-407f-4f0d-9a33-274ac0f0b53d"
+
+
 
 TYPES = {
     "PRESET",
@@ -29,62 +38,27 @@ STYLES = {
     "CANT_SEE",
     "MR_HEALING",
     "INFERNAL",
-    "PLAIN", -- TODO - think about how to deal with style for arms, frames, main chain
+    "PLAIN",
     "NONE"
 }
 
--- TODO - Selection is broky become atlas changed
-
-local function isControlledCharacter(entity)
-    if type(entity) == "string" then
-        entity = Ext.Entity.Get(entity)
-    end
-    return entity ~= nil and entity.ClientControl ~= nil and entity.UserReservedFor.UserID == 1
-end
-
--- Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Optometry", function(tabHeader)
-
---     -- I cannot get any identifying information about button -> use index
---     local buttons = MCM:CreateOptometry(tabHeader)
-
-
---     -- buttons[1].OnClick = function()
---     --     _D("Copy Glasses from self was clicked!")
---         --Visuals:SavePreset(hostCharacter)
---         -- isControlledCharacter(entity) -- use this
---     --end
-
-
---     buttons[2].OnClick = function()
---         _D("Paste Glasses to Target was clicked!")
---         -- Start a spell
---     end
-
-
---     buttons[3].OnClick = function()
---         _D("Remove Glasses was clicked!")
---         -- Start a spell
---     end
-
--- end)
-
-
-
-SatanDoesIMGUI = {}
-SatanDoesIMGUI.__index = SatanDoesIMGUI
 
 local highGlassesTab
 
 
+--------------------------------------------------------------------------------
+---                          Getters and Setters
+--------------------------------------------------------------------------------
 
--- TODO - client can'T acces this function. Send an event instead
 
 function SatanDoesIMGUI:GetHighGlassesTab()
     return highGlassesTab
 end
 
+
+-- Get type ("PRESET", "CHAINS_RIGHT_1" etc.) from a string
+---@param str string 
 function SatanDoesIMGUI:GetType(str)
-    -- Loop through the TYPES to find the type in the spell string
     local type
     for _, t in ipairs(TYPES) do
         if string.find(str, t) then
@@ -97,8 +71,9 @@ function SatanDoesIMGUI:GetType(str)
 end
 
 
+-- Get type ("PIXIE_KILLER", "CINNAMONROLL" etc.) from a string
+---@param str string 
 function SatanDoesIMGUI:GetStyle(str)
-    -- Loop through the TYPES to find the type in the spell string
     local style
     for _, t in ipairs(STYLES) do
         if string.find(str, t) then
@@ -106,17 +81,21 @@ function SatanDoesIMGUI:GetStyle(str)
             break
         end
     end
-
     return style
 end
 
 
 
+--------------------------------------------------------------------------------
+---                             Methods
+--------------------------------------------------------------------------------
 
 
+-- TODO - These stay when regions are changed, meaning the tabs get added again
+-- For every region swap
 
-
-if Ext.Mod.IsModLoaded(mcmUUID) then
+-- Insert Glasses Low Tab
+if Ext.Mod.IsModLoaded(MCMUUID) then
 
     Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Glasses Low", function(tab)
         local tableOfTales = MCM:CreateGlasses("LOW", tab)
@@ -129,8 +108,6 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
 
                     
                     Ext.Net.PostMessageToServer("LOKE_GLASSES",Ext.Json.Stringify({size = "LOW", type = type, style = style}))
-
-                    -- when sending to server check if size needs to be overriden to DGB
                 end
             end
         end
@@ -139,8 +116,8 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
 end
 
 
-
-if Ext.Mod.IsModLoaded(mcmUUID) then
+-- Insert Glasses High Tab
+if Ext.Mod.IsModLoaded(MCMUUID) then
 
     Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Glasses High", function(tab)
         local tableOfTales = MCM:CreateGlasses("HIGH", tab)
@@ -162,8 +139,9 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
 end
 
 
-if Ext.Mod.IsModLoaded(mcmUUID) then
 
+-- Insert Credits tab
+if Ext.Mod.IsModLoaded(MCMUUID) then
 
     Mods.BG3MCM.IMGUIAPI:InsertModMenuTab(ModuleUUID, "Credits and thanks", function(tab)
 
@@ -176,17 +154,8 @@ if Ext.Mod.IsModLoaded(mcmUUID) then
         tab:AddBulletText("And special thanks to Kaz for being an amazing friend ")
         tab:AddText("")
 
-
     end)
-else
-
-
-    print("MCM is not loaded. Please download and activate it")
 end
-
-
-
--- TODO - rename tabs etc.
 
 
 

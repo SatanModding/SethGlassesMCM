@@ -28,6 +28,7 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
         end
 
         Shapeshift:RevertEditability(object)
+        Visuals:Replicate(object)
 
     end
 
@@ -40,6 +41,8 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(object, status
         Visuals:RemoveListOfVisuals(object, previousGlasses)
 
         Shapeshift:RevertEditability(object)
+        Visuals:Replicate(object)
+
 
     end
 

@@ -1,9 +1,17 @@
 
+-------------------------------------------------------------------------------------------------------------
+---
+---                                 For Handling Visuals (CCAV/CCSV)
+---                              For entities that are of GameObjectType = 0    
+---                           They pull from entity.CharacterCreationAppearance.Visuals
+--- 
+------------------------------------------------------------------------------------------------------------
+
+
 
 Visuals = {}
 Visuals.__index = Visuals
 
-local none = "1f82fcd6-b6d2-4b4b-a7f6-64c6b4ae132c"
 
 TYPES = {
     "FRAME",
@@ -25,28 +33,78 @@ SIZES = {
     "LOW",
 }
 
+-- TODO - instead of calling Osi.AddCustomVisualOverride or Osi.RemoveCustomVisualOvirride
+-- insert into the visuals table and call replicate to reduce flickering
+
+
+function Visuals:Replicate(character)
+    local entity = Ext.Entity.Get(character)
+
+    Ext.Timer.WaitFor(600, function() 
+        entity:Replicate("CharacterCreationAppearance")
+    end)
+    
+end
+
+
+-- I kept the typo for consistency, and because it's funny
+---@param character string - uuid
+---@return visual string - uuid
+function Visuals:BetterRemoveVisualOvirride(character, visual)
+
+    local entity = Ext.Entity.Get(character)
+    local visuals = {}
+
+    for _, entry in pairs(entity.CharacterCreationAppearance.Visuals) do
+        if not (entry == visual) then
+            table.insert(visuals,entry)
+        end
+    end
+
+    entity.CharacterCreationAppearance.Visuals = visuals
+end
+
+
+
+---@param character string - uuid
+function Visuals:BetterAddVisualOverride(character, visual)
+
+    Ext.Timer.WaitFor(100, function ()
+
+        local entity = Ext.Entity.Get(character)                    
+        local visuals = {}
+
+        for _, entry in pairs(entity.CharacterCreationAppearance.Visuals) do
+            table.insert(visuals,entry)
+        end
+
+        -- this is specifically for my glasses mod. I add a "none" visual uuid 
+        -- but the entity doesn't like it. Doesn't hurt to keep it in here but
+        -- not necessary for your project
+        if not (visual == "none")  then
+            table.insert(visuals, visual)
+            entity.CharacterCreationAppearance.Visuals = visuals
+        end
+        
+    end)
+
+end
+
+
 
 -- adds a whole list of visuals with Osi.AddCustomVisualOverride for convenience
 ---@param character string -uuid
 ---@param listToAdd table 
 function Visuals:AddListOfVisuals(character, listToAdd)
-
   
     if listToAdd then
-
 
         if Shapeshift:IsShapeshifted(character) then 
             Shapeshift:AddListOfVisuals(character, listToAdd)
         else
-
-            -- Not sure why but this timer is necessary
-            -- probably because removing them takes too long (for togglong on after GainedControl)
-            Ext.Timer.WaitFor(200, function ()
-                for _, entry in pairs(listToAdd) do
-                    Osi.AddCustomVisualOverride(character, entry)
-                end
-            end)
-		
+            for _, entry in pairs(listToAdd) do
+                Visuals:BetterAddVisualOverride(character, entry)
+            end
         end
     end
 end
@@ -68,9 +126,6 @@ function Visuals:RemoveListOfVisuals(character, listToRemove)
             end
         
         end
-
-
-        
     end
 end
 
@@ -284,7 +339,7 @@ function Visuals:SwapGlasses(character, size)
 
         -- add new glasses components
         for _, w in pairs(oppositeVisual) do
-            Osi.AddCustomVisualOverride(character, w)
+            Visuals:BetterAddVisualOverride(character, w)
         end
 
     end
@@ -371,30 +426,35 @@ function Visuals:SwapVisuals(character, type, newVisual)
 
     local currentVisual = Visuals:GetGlassesEntryOfType(character, type)
 
-   -- print("currentVisual ", currentVisual)
+   if currentVisual then 
+        SatanPrint(GLOBALDEBUG, "currentVisual ".. currentVisual)
+   else
+        SatanPrint(GLOBALDEBUG, "no current visual")
+   end
 
    if currentVisual then
-
         if Shapeshift:IsShapeshifted(character) then 
-                Shapeshift:RemoveCustomVisualOvirride(character, currentVisual)
-        else
-                --print("Osi.AddCustomVisualOverride ",character," ", currentVisual)
-                Osi.RemoveCustomVisualOvirride(character, currentVisual)
-
+            Shapeshift:RemoveCustomVisualOvirride(character, currentVisual)
         end
     end
 
-        
-
+    
     -- if the new visual is of type none, only remove, don't add 
     if newVisual then 
-        if not (newVisual == none) then
+        -- I probably use both of these for some reason
+        if not (newVisual == "none") then
+
+            SatanPrint(GLOBALDEBUG, "visual type is not none but " .. newVisual)
 
             if Shapeshift:IsShapeshifted(character) then 
                 Shapeshift:AddCustomVisualOverride(character, newVisual)
             else
-                -- print("Osi.AddCustomVisualOverride ",character," ", newVisual)
-                Osi.AddCustomVisualOverride(character, newVisual)
+                Visuals:BetterRemoveVisualOvirride(character, currentVisual)
+                Visuals:BetterAddVisualOverride(character, newVisual)
+            end
+        else
+            if not Shapeshift:IsShapeshifted(character) then
+                Visuals:BetterRemoveVisualOvirride(character, currentVisual)
             end
         end
     end
@@ -516,7 +576,7 @@ function Visuals:MatchChain(character)
         if Shapeshift:IsShapeshifted(character) then 
             Shapeshift:AddCustomVisualOverride(character, chainLeft)
         else
-            Osi.AddCustomVisualOverride(character, chainLeft)
+            Visuals:BetterAddVisualOverride(character, chainLeft)
         end
     
     elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_LEFT_1")then
@@ -536,7 +596,7 @@ function Visuals:MatchChain(character)
         if Shapeshift:IsShapeshifted(character) then 
             Shapeshift:AddCustomVisualOverride(character, chainright1)
         else
-            Osi.AddCustomVisualOverride(character, chainright1)
+            Visuals:BetterAddVisualOverride(character, chainright1)
         end
 
     elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_RIGHT_1")then
@@ -557,7 +617,7 @@ function Visuals:MatchChain(character)
         if Shapeshift:IsShapeshifted(character) then 
             Shapeshift:AddCustomVisualOverride(character, chainright2)
         else
-            Osi.AddCustomVisualOverride(character, chainright2)
+            Visuals:BetterAddVisualOverride(character, chainright2)
         end
 
     elseif Visuals:HasGlassesEntryOfType(character,"CHAINS_RIGHT_2")then

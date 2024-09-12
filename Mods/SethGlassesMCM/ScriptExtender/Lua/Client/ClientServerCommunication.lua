@@ -1,12 +1,23 @@
+----------------------------------------------------------------------------------------
+--
+--               For sending  messages from Client to Server
+--               And receivign messages fromm Server to Client
+--
+----------------------------------------------------------------------------------------
+
+
 ClientServerCommunication = {}
 ClientServerCommunication.__index = ClientServerCommunication
 
 
 
--- BroadcastMessage is Server -> Client
--- PostMessageToServer is Client -> Server 
+-------------------------------------------------------------------------------------------
+---                             Receiving messages
+-------------------------------------------------------------------------------------------
 
 
+-- Dragonborns don't have "high" glasses options. 
+-- If DGB has been selected, hide those options
 Ext.Events.NetMessage:Subscribe(function(e)
 
     if (e.Channel == "ChangeVisibilityOfDGBTab") then
