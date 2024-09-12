@@ -45,9 +45,9 @@ function DoTheThing(size, type, style)
 
     local character = Osi.GetHostCharacter()
 
-    SatanPrint(GLOBALDEBUG, "size " .. size)
-    SatanPrint(GLOBALDEBUG, "type " .. type)
-    SatanPrint(GLOBALDEBUG, "style " .. style)
+    -- SatanPrint(GLOBALDEBUG, "size " .. size)
+    -- SatanPrint(GLOBALDEBUG, "type " .. type)
+    -- SatanPrint(GLOBALDEBUG, "style " .. style)
 
 
     if IsDragonborn(character) then
@@ -71,8 +71,8 @@ function DoTheThing(size, type, style)
     
     local currentGlassVisuals = Visuals:GetAllGlassesVisuals(character)
 
-    SatanPrint(GLOBALDEBUG, "current visuals")
-    SatanDump(GLOBALDEBUG, currentGlassVisuals)
+    -- SatanPrint(GLOBALDEBUG, "current visuals")
+    -- SatanDump(GLOBALDEBUG, currentGlassVisuals)
 
     local visual = Visuals:GetVisual(style, type, size)
 

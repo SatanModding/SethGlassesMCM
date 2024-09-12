@@ -426,11 +426,11 @@ function Visuals:SwapVisuals(character, type, newVisual)
 
     local currentVisual = Visuals:GetGlassesEntryOfType(character, type)
 
-   if currentVisual then 
-        SatanPrint(GLOBALDEBUG, "currentVisual ".. currentVisual)
-   else
-        SatanPrint(GLOBALDEBUG, "no current visual")
-   end
+   --if currentVisual then 
+       -- SatanPrint(GLOBALDEBUG, "currentVisual ".. currentVisual)
+   --else
+        --SatanPrint(GLOBALDEBUG, "no current visual")
+   --end
 
    if currentVisual then
         if Shapeshift:IsShapeshifted(character) then 
